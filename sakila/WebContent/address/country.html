@@ -36,24 +36,39 @@
 	<script>
 		// JQuery, JQuery() => $, $()
 		$("#addCountry").click(function() {
-			$.ajax({
-				url : "/sakila/address/selectCountryList",
-				method : "post",
-				success : function(json) {
-					console.log(json);
-					for(let i = 0; i < json.length; i++) {
-						let html = "<tr>";
-						htmt += "<td>"+json[i].countryId+"</td>";
-						htmt += "<td>"+json[i].country+"</td>";
-						htmt += "<td>"+json[i].lastUpdate+"</td>";
-						html += "</tr>";
-						$("#list").append(html);
+			console.log("addCountry클릭 함수 실행");
+			// id가 country의 value값을 가져옴
+			// let countryValue = $("#country").val(); document.getElementById("country").value
+			console.log("country val : " + $("#country").val());
+			if($("#country") === " ") {
+				alert("나라입력을 해주세요~");
+				return;
+			}
+		
+		// 리스트 보여줌
+		$.ajax({ // ajax메서드
+			url : "/sakila/address/selectCountryList", // 호출할 주소 => 서블릿으로
+			method : "post", // 보낼 방식
+			success : function(json) { // ajax 실행 성공시 함수 실행
+				console.log("List success");
+				// 입력 성공 후 tbody안에 country리스트를 보여주도록 요청
+				$("#list").empty(); // 요청 중복을 막기 위해 청소
+				$.ajax({
+					url : "/sakila/address/selectCountryList",
+					method : "post",
+					// json으로 넘어온 리턴값을 JQuery로 바꿔줌
+					success : function(json) { // 받아온 json파일을 function의 매개변수에 저장 -> 자바스크립트 파일의 객체로 변경
+						console.log(json);
+						for(let i = 0; i < json.length;	 i++) {
+							let html = "<tr><td>"+json[i].countryId+"</td><td>"+json[i].country+"</td><td>"+json[i].lastUpdate+"</td></tr>"
+							// 리스트를 html에 추가
+							$("#list").append(html);
+						}
 					}
-				}
-			});
+				});
+			}
 		});
-		// id가 country의 value값을 가져옴
-		// let countryValue = $("#country").val(); document.getElementById("country").value
+	});
 	</script>
 </html>
 
