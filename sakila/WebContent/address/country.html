@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="EUC-KR">
+<title>Insert title here</title>
+</head>
+<body>
+<h1>MENU</h1>
+<div>
+	<h1>Country 관리</h1>
+	<h2>Country 입력</h2>
+	<div>
+		<div>Country : <input type = "text" id = "country"></div>	
+		<div><button type = "button" id = "addCountry">add country</button></div>
+	</div>
+	
+	<h2>Country 목록</h2>
+	<div>
+		<table border = "1">
+			<thead>
+				<tr>
+					<th>countryId</th>
+					<th>country</th>
+					<th>lastUpate</th>
+				</tr>
+			</thead>
+			<tbody id = "list">
+			</tbody>
+		</table>
+	</div>
+	<button type = "button" id = "preBtn">이전</button>
+	<button type = "button" id = "nextBtn">다음</button>
+</div>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script>
+		// JQuery, JQuery() => $, $()
+		$("#addCountry").click(function() {
+			$.ajax({
+				url : "/sakila/address/selectCountryList",
+				method : "post",
+				success : function(json) {
+					console.log(json);
+					for(let i = 0; i < json.length; i++) {
+						let html = "<tr>";
+						htmt += "<td>"+json[i].countryId+"</td>";
+						htmt += "<td>"+json[i].country+"</td>";
+						htmt += "<td>"+json[i].lastUpdate+"</td>";
+						html += "</tr>";
+						$("#list").append(html);
+					}
+				}
+			});
+		});
+		// id가 country의 value값을 가져옴
+		// let countryValue = $("#country").val(); document.getElementById("country").value
+	</script>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
