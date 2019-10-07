@@ -3,16 +3,15 @@ package sakila.db;
 import java.sql.*;
 
 public class DBHelp {
-	// ´Ù¸¥°÷¿¡¼­ °´Ã¼»ı¼ºÀ» ÀÚÀ¯·Ó°Ô ÇÏ±âÀ§ÇØ static¸¦ ºÙ¿©ÁÜ
 	
-	// db¸¦ ¿¬°áÇØÁÖ´Â ¸Ş¼Òµå
+	// dbì—°ê²°í•˜ëŠ” ë©”ì„œë“œ
 	public static Connection getConncetion() throws Exception{
 		 Class.forName("org.mariadb.jdbc.Driver");
 		 Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/sakila","root","java1234");
 		 return conn;
 	}
 	
-	// db¸¦ Á¾·áÇÏ´Â ¸Ş¼Òµå
+	// dbì‚¬ìš©ì„ ì¢…ë£Œí•˜ëŠ” ë©”ì„œë“œ
 	public static void close(ResultSet rs, Statement stmt, Connection conn) {
 		if(rs != null) {
 			try {

@@ -1,20 +1,20 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="EUC-KR">
+<meta charset="UTF-8">
 <title>Insert title here</title>
 </head>
 <body>
 <h1>MENU</h1>
 <div>
-	<h1>Country °ü¸®</h1>
-	<h2>Country ÀÔ·Â</h2>
+	<h1>Country ê´€ë¦¬</h1>
+	<h2>Country ì…ë ¥</h2>
 	<div>
 		<div>Country : <input type = "text" id = "country"></div>	
 		<div><button type = "button" id = "addCountry">add country</button></div>
 	</div>
 	
-	<h2>Country ¸ñ·Ï</h2>
+	<h2>Country ëª©ë¡</h2>
 	<div>
 		<table border = "1">
 			<thead>
@@ -28,47 +28,48 @@
 			</tbody>
 		</table>
 	</div>
-	<button type = "button" id = "preBtn">ÀÌÀü</button>
-	<button type = "button" id = "nextBtn">´ÙÀ½</button>
+	<button type = "button" id = "preBtn">ì´ì „</button>
+	<button type = "button" id = "nextBtn">ë‹¤ìŒ</button>
 </div>
 </body>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script>
 		// JQuery, JQuery() => $, $()
 		$("#addCountry").click(function() {
-			console.log("addCountryÅ¬¸¯ ÇÔ¼ö ½ÇÇà");
-			// id°¡ countryÀÇ value°ªÀ» °¡Á®¿È
+			console.log("addCountryí´ë¦­ í•¨ìˆ˜ ì‹¤í–‰");
+			// idê°€ countryì˜ valueê°’ì„ ê°€ì ¸ì˜´
 			// let countryValue = $("#country").val(); document.getElementById("country").value
-			console.log("country val : " + $("#country").val());
+			console.log("ì¶”ê°€í•œ ë‚˜ë¼ : " + $("#country").val());
 			if($("#country") === " ") {
-				alert("³ª¶óÀÔ·ÂÀ» ÇØÁÖ¼¼¿ä~");
+				alert("ë‚˜ë¼ì…ë ¥ì„ í•´ì£¼ì„¸ìš”~");
 				return;
 			}
 		
-		// ¸®½ºÆ® º¸¿©ÁÜ
-		$.ajax({ // ajax¸Ş¼­µå
-			url : "/sakila/address/selectCountryList", // È£ÃâÇÒ ÁÖ¼Ò => ¼­ºí¸´À¸·Î
-			method : "post", // º¸³¾ ¹æ½Ä
-			success : function(json) { // ajax ½ÇÇà ¼º°ø½Ã ÇÔ¼ö ½ÇÇà
-				console.log("List success");
-				// ÀÔ·Â ¼º°ø ÈÄ tbody¾È¿¡ country¸®½ºÆ®¸¦ º¸¿©ÁÖµµ·Ï ¿äÃ»
-				$("#list").empty(); // ¿äÃ» Áßº¹À» ¸·±â À§ÇØ Ã»¼Ò
-				$.ajax({
-					url : "/sakila/address/selectCountryList",
-					method : "post",
-					// jsonÀ¸·Î ³Ñ¾î¿Â ¸®ÅÏ°ªÀ» JQuery·Î ¹Ù²ãÁÜ
-					success : function(json) { // ¹Ş¾Æ¿Â jsonÆÄÀÏÀ» functionÀÇ ¸Å°³º¯¼ö¿¡ ÀúÀå -> ÀÚ¹Ù½ºÅ©¸³Æ® ÆÄÀÏÀÇ °´Ã¼·Î º¯°æ
-						console.log(json);
-						for(let i = 0; i < json.length;	 i++) {
-							let html = "<tr><td>"+json[i].countryId+"</td><td>"+json[i].country+"</td><td>"+json[i].lastUpdate+"</td></tr>"
-							// ¸®½ºÆ®¸¦ html¿¡ Ãß°¡
-							$("#list").append(html);
+			$.ajax({ // ajaxë©”ì„œë“œ
+				url : "/sakila/address/InsertCountry", // í˜¸ì¶œí•  ì£¼ì†Œ => ì„œë¸”ë¦¿ìœ¼ë¡œ
+				method : "post", // ë³´ë‚¼ ë°©ì‹
+				data : {country : $("#country").val()}, // ë³´ë‚¼ ë°ì´í„° => {ì´ë¦„ : ê°’}
+				success : function() { // ajax ì‹¤í–‰ ì„±ê³µì‹œ í•¨ìˆ˜ ì‹¤í–‰
+					// console.log("ì…ë ¥ì„±ê³µ");
+					
+					// ì…ë ¥ ì„±ê³µ í›„ tbodyì•ˆì— countryë¦¬ìŠ¤íŠ¸ë¥¼ ë³´ì—¬ì£¼ë„ë¡ ìš”ì²­
+					$("#list").empty(); // ìš”ì²­ ì¤‘ë³µì„ ë§‰ê¸° ìœ„í•´ ì²­ì†Œ
+					$.ajax({
+						url : "/sakila/address/selectCountryList",
+						method : "post",
+						// jsonìœ¼ë¡œ ë„˜ì–´ì˜¨ ë¦¬í„´ê°’ì„ JQueryë¡œ ë°”ê¿”ì¤Œ
+						success : function(json) { // ë°›ì•„ì˜¨ jsoníŒŒì¼ì„ functionì˜ ë§¤ê°œë³€ìˆ˜ì— ì €ì¥ -> ìë°”ìŠ¤í¬ë¦½íŠ¸ íŒŒì¼ì˜ ê°ì²´ë¡œ ë³€ê²½
+							console.log(json);
+							for(let i = 0; i < json.length;	 i++) {
+								let html = "<tr><td>"+json[i].countryId+"</td><td>"+json[i].country+"</td><td>"+json[i].lastUpdate+"</td></tr>"
+								// ë¦¬ìŠ¤íŠ¸ë¥¼ htmlì— ì¶”ê°€
+								$("#list").append(html);
+							}
 						}
-					}
-				});
-			}
+					});
+				}
+			});
 		});
-	});
 	</script>
 </html>
 

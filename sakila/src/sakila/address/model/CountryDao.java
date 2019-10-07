@@ -9,7 +9,7 @@ import java.util.List;
 import sakila.db.DBHelp;
 
 public class CountryDao {
-	// ¸®½ºÆ®¸¦ º¸¿©ÁÖ´Â ¸Ş¼­µå
+	// countryì˜ ë¦¬ìŠ¤íŠ¸ë¥¼ ë³´ì—¬ì£¼ëŠ” ë©”ì„œë“œ
 	public List<Country> selectCountryList() {
 		List<Country> list = new ArrayList<Country>();
 		Connection conn = null;
@@ -35,7 +35,7 @@ public class CountryDao {
 		return list;
 	}
 	
-	// country¸¦ Ãß°¡ÇÏ´Â ¸Ş¼­µå
+	// Countryí…Œì´ë¸”ì— ì¶”ê°€í•˜ëŠ” ë©”ì„œë“œ
 	public void insertCountry(Country country) {
 		Connection conn = null;
 		PreparedStatement stmt = null;
@@ -53,5 +53,5 @@ public class CountryDao {
 	}
 	
 	
-	// ÀüÃ¼ ÇàÀÇ °¹¼ö¸¦ ±¸ÇÏ´Â ¸Ş¼­µå
+	// ì „ì²´í–‰ì„ êµ¬í•˜ëŠ” ë©”ì„œë“œ
 }
