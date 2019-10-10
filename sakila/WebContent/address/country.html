@@ -5,84 +5,169 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>MENU</h1>
-<div>
-	<h1>Country 관리</h1>
-	<h2>Country 입력</h2>
-	<div>
-		<div>Country : <input type = "text" id = "country"></div>	
-		<div><button type = "button" id = "addCountry">add country</button></div>
+	<div id = "aside">
+		<!-- aside.html include -->
 	</div>
 	
-	<h2>Country 목록</h2>
-	<div>
-		<table border = "1">
-			<thead>
-				<tr>
-					<th>countryId</th>
-					<th>country</th>
-					<th>lastUpate</th>
-				</tr>
-			</thead>
-			<tbody id = "list">
-			</tbody>
-		</table>
-	</div>
-	<button type = "button" id = "preBtn">이전</button>
-	<button type = "button" id = "nextBtn">다음</button>
-</div>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-	<script>
-		// JQuery, JQuery() => $, $()
-		$("#addCountry").click(function() {
-			console.log("addCountry클릭 함수 실행");
-			// id가 country의 value값을 가져옴
-			// let countryValue = $("#country").val(); document.getElementById("country").value
-			console.log("추가한 나라 : " + $("#country").val());
-			if($("#country") === " ") {
-				alert("나라입력을 해주세요~");
-				return;
-			}
+	<div id="section">
+		<h1>Country 관리</h1>
+		<h2>Country 입력</h2>
+		<div>
+			<div>Country : <input type = "text" id = "country"></div>	
+			<div><button type = "button" id = "addCountry">add country</button></div>
+		</div>
 		
-			$.ajax({ // ajax메서드
-				url : "/sakila/address/InsertCountry", // 호출할 주소 => 서블릿으로
-				method : "post", // 보낼 방식
-				data : {country : $("#country").val()}, // 보낼 데이터 => {이름 : 값}
-				success : function() { // ajax 실행 성공시 함수 실행
-					// console.log("입력성공");
-					
-					// 입력 성공 후 tbody안에 country리스트를 보여주도록 요청
-					$("#list").empty(); // 요청 중복을 막기 위해 청소
-					$.ajax({
-						url : "/sakila/address/selectCountryList",
-						method : "post",
-						// json으로 넘어온 리턴값을 JQuery로 바꿔줌
-						success : function(json) { // 받아온 json파일을 function의 매개변수에 저장 -> 자바스크립트 파일의 객체로 변경
-							console.log(json);
-							for(let i = 0; i < json.length;	 i++) {
-								let html = "<tr><td>"+json[i].countryId+"</td><td>"+json[i].country+"</td><td>"+json[i].lastUpdate+"</td></tr>"
-								// 리스트를 html에 추가
-								$("#list").append(html);
-							}
-						}
-					});
+		<h2>Country 목록</h2>
+		<div>
+			<table border = "1">
+				<thead>
+					<tr>
+						<th>countryId</th>
+						<th>country</th>
+						<th>lastUpate</th>
+					</tr>
+				</thead>
+				<tbody id = "list">
+				</tbody>
+			</table>
+		</div>
+		<button type = "button" id = "preBtn">이전</button>
+		<button type = "button" id = "nextBtn">다음</button>
+	</div>
+</body>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+	<script>
+	let currentPage = 1;
+	
+	$.ajax({
+		url : "/sakila/address/selectCountryList",
+		method : "post",
+		data : {currentPage : currentPage},
+		// json으로 넘어온 리턴값을 JQuery로 바꿔줌
+		success : function(json) { // 받아온 json파일을 function의 매개변수에 저장 -> 자바스크립트 파일의 객체로 변경
+			console.log(json);
+			for(let i = 0; i < json.length; i++) {
+				let html = "<tr><td>"+json[i].countryId+"</td><td>"+json[i].country+"</td><td>"+json[i].lastUpdate+"</td></tr>"
+				// 리스트를 html에 추가
+				$("#list").append(html);
+			}
+		}
+	});
+	
+	// 이전버튼
+	$("#preBtn").click(function() {
+		if(currentPage === 1) {
+			alert("현재 1페이지입니다.");
+			return;
+		}
+		
+		currentPage--;
+		console.log(currentPage);
+		
+		$("#list").empty(); // 요청 중복을 막기 위해 청소
+		$.ajax({
+			url : "/sakila/address/selectCountryList",
+			method : "post",
+			data : {currentPage : currentPage},
+			// json으로 넘어온 리턴값을 JQuery로 바꿔줌
+			success : function(json) { // 받아온 json파일을 function의 매개변수에 저장 -> 자바스크립트 파일의 객체로 변경
+				console.log(json);
+				for(let i = 0; i < json.length; i++) {
+					let html = "<tr><td>"+json[i].countryId+"</td><td>"+json[i].country+"</td><td>"+json[i].lastUpdate+"</td></tr>"
+					// 리스트를 html에 추가
+					$("#list").append(html);
 				}
-			});
+			}
 		});
+	});
+		
+	
+	// 다음버튼
+	$("#nextBtn").click(function() {
+		// db에서 전체 데이터 사이즈를 가지고 온다.
+		let count = 0;
+		$.ajax({
+			url : "/sakila/address/selectCountryCount",
+			method : "post",
+			// 비동기 요청 : false
+			async : false,
+			success : function(json) {
+				console.log(json);
+				count = Number(json);
+			}
+		});	
+		
+		// 마지막페이지
+		let lastPage = Math.ceil(count/10);
+		if(currentPage == lastPage) {
+			alert("마지막 페이지입니다~");
+			return;
+		}
+		
+		currentPage++;
+		console.log(currentPage);
+		
+		$("#list").empty(); // 요청 중복을 막기 위해 청소
+		$.ajax({
+			url : "/sakila/address/selectCountryList",
+			method : "post",
+			data : {currentPage : currentPage},
+			// json으로 넘어온 리턴값을 JQuery로 바꿔줌
+			success : function(json) { // 받아온 json파일을 function의 매개변수에 저장 -> 자바스크립트 파일의 객체로 변경
+				console.log(json);
+				for(let i = 0; i < json.length; i++) {
+					let html = "<tr><td>"+json[i].countryId+"</td><td>"+json[i].country+"</td><td>"+json[i].lastUpdate+"</td></tr>"
+					// 리스트를 html에 추가
+					$("#list").append(html);
+				}
+			}
+		});
+		
+	});
+	
+	
+	
+	// JQuery, JQuery() => $, $()
+	$("#addCountry").click(function() {
+		console.log("addCountry클릭 함수 실행");
+		// id가 country의 value값을 가져옴
+		// let countryValue = $("#country").val(); document.getElementById("country").value
+		console.log("country val : " + $("#country").val());
+		
+		if($("#country").val() === "") {
+			alert("나라 입력을 해주세요~");
+			return
+		}
+		
+		$.ajax({ // ajax메서드
+			url : "/sakila/address/InsertCountry", // 호출할 주소 => 서블릿으로
+			method : "post", // 보낼 방식
+			data : {country : $("#country").val()}, // 보낼 데이터 => {이름 : 값}
+			success : function() { // ajax 실행 성공시 함수 실행
+				// console.log("success!");
+				
+				// 입력 성공 후 tbody안에 country리스트를 보여주도록 요청
+				currentPage = 1;
+				$("#list").empty(); // 요청 중복을 막기 위해 청소
+				$.ajax({
+					url : "/sakila/address/selectCountryList",
+					method : "post",
+					data : {currentPage : currentPage},
+					// json으로 넘어온 리턴값을 JQuery로 바꿔줌
+					success : function(json) { // 받아온 json파일을 function의 매개변수에 저장 -> 자바스크립트 파일의 객체로 변경
+						console.log(json);
+						for(let i = 0; i < json.length; i++) {
+							let html = "<tr><td>"+json[i].countryId+"</td><td>"+json[i].country+"</td><td>"+json[i].lastUpdate+"</td></tr>"
+							// 리스트를 html에 추가
+							$("#list").append(html);
+						}
+					}
+				});
+			}
+		});
+	});
 	</script>
 </html>
-
-
-
-
-
-
-
-
-
-
-
-
 
 

@@ -17,7 +17,7 @@ public class InsertCountry extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String country = request.getParameter("country");
 		System.out.println("---insertAddress Servlet실행---");
-		System.out.println("입력받은 나라 : " + country );
+		System.out.println("requestParameter : " + country);
 		
 		countryDao = new CountryDao();
 		Country c = new Country();
@@ -25,3 +25,22 @@ public class InsertCountry extends HttpServlet {
 		countryDao.insertCountry(c);
 	}
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

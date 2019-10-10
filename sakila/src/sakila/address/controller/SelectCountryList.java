@@ -1,7 +1,6 @@
 package sakila.address.controller;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.ServletException;
@@ -20,14 +19,16 @@ public class SelectCountryList extends HttpServlet {
 	private CountryDao countryDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		System.out.println("/address/selectCountryList 실행");
-		
 		//json타입으로 리턴
-		response.setContentType("application/json; charset=UTF-8");
+		response.setContentType("application/json;charset=UTF-8");
 		
-		countryDao = new CountryDao(); 
+		System.out.println("currentPage : " + request.getParameter("currentPage"));
+
+		//첫 html에서 먼저 넘겨받아서 첫페이지 설정 x
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
 		
-		List<Country> list = countryDao.selectCountryList();
-		
+		countryDao = new CountryDao();
+		List<Country> list = countryDao.selectCountryList(currentPage);
 		// json클래스 선언 --> ajax와 데이터 통신을 위해
 		Gson gson = new Gson();
 		// list의 내용을 json타입으로 바꿔줌
@@ -38,3 +39,10 @@ public class SelectCountryList extends HttpServlet {
 		response.getWriter().write(jsonList);
 	}
 }
+
+
+
+
+
+
+

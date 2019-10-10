@@ -6,19 +6,24 @@ import java.sql.ResultSet;
 import java.util.ArrayList;
 import java.util.List;
 
-import sakila.db.DBHelp;
+import sakila.db.DBHelper;
 
 public class CountryDao {
 	// country의 리스트를 보여주는 메서드
-	public List<Country> selectCountryList() {
+	public List<Country> selectCountryList(int currentPage) {
 		List<Country> list = new ArrayList<Country>();
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT country_id, country, last_update FROM country ORDER BY country_id DESC";
+		
+		final int ROW_PER_PAGE = 10;
+		int beginRow = (currentPage - 1) * ROW_PER_PAGE;
+		String sql = "SELECT country_id, country, last_update FROM country ORDER BY country_id DESC limit ?,?";
 		try {
-			conn = DBHelp.getConncetion();
+			conn = DBHelper.getConncetion();
 			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, ROW_PER_PAGE);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				Country country = new Country();
@@ -30,7 +35,7 @@ public class CountryDao {
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBHelp.close(rs, stmt, conn);
+			DBHelper.close(rs, stmt, conn);
 		}
 		return list;
 	}
@@ -41,14 +46,14 @@ public class CountryDao {
 		PreparedStatement stmt = null;
 		String sql = "INSERT INTO country(country, last_update) VALUES (?, now())";
 		try {
-			conn = DBHelp.getConncetion();
+			conn = DBHelper.getConncetion();
 			stmt = conn.prepareStatement(sql);
 			stmt.setString(1, country.getCountry());
 			stmt.executeUpdate();
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {
-			DBHelp.close(null, stmt, conn);
+			DBHelper.close(null, stmt, conn);
 		}
 	}
 	

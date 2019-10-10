@@ -2,7 +2,7 @@ package sakila.db;
 
 import java.sql.*;
 
-public class DBHelp {
+public class DBHelper {
 	
 	// db연결하는 메서드
 	public static Connection getConncetion() throws Exception{
