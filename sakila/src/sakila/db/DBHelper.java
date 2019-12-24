@@ -4,14 +4,14 @@ import java.sql.*;
 
 public class DBHelper {
 	
-	// db연결하는 메서드
+	// db연결 메서드
 	public static Connection getConncetion() throws Exception{
 		 Class.forName("org.mariadb.jdbc.Driver");
-		 Connection conn = DriverManager.getConnection("jdbc:mariadb://127.0.0.1:3306/sakila","root","java1234");
+		 Connection conn = DriverManager.getConnection("jdbc:mariadb://localhost:3306/maintain0105","maintain0105","maintain0105!");
 		 return conn;
 	}
 	
-	// db사용을 종료하는 메서드
+	// db 종료 메서드
 	public static void close(ResultSet rs, Statement stmt, Connection conn) {
 		if(rs != null) {
 			try {
