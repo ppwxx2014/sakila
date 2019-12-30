@@ -1,77 +1,56 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="kor">
 <head>
-<title>sakila index</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-	body {
-		padding: 0;
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-		background-position: 0 0;
-		background-repeat: no-repeat;
-		background-attachment: fixed;
-		background-size: cover;
-		position: relative;
-		overflow-y: auto;
-	}
-	
-	#aside {
-		width: 200px;
-		height: 3000px;
-		position: fixed;
-		background: orange;
-		overflow: hidden;
-		float: left;
-	}
-	
-	#section {
-		margin-left: 300px;
-		margin-bottom: 100px;
-		background: white;
-	}
-</style>
+<title>Sidebar 02</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/sakila/assets/css/style.css">
 </head>
 <body>
-	<div id="aside">
-		<h1>MENU</h1>
-		
-	</div>
-	<div id="section">
+	<div class="wrapper d-flex align-items-stretch">
+		<nav id="sidebar">
+			
+		</nav>
 
-		<h2>주소 목록</h2>
-		<div>
-			<!--  to do  : country x city x address limit 100 2번 join-->
-			<table border = "1">
-				<thead>
-					<tr>
-						<th>countryId</th>
-						<th>country</th>
-						<th>cityId</th>
-						<th>city</th>
-						<th>addressId</th>
-						<th>address</th>
-						<th>address2</th>
-						<th>district</th>
-						<th>postalCode</th>
-						<th>phone</th>
-						<th>lastUpdate</th>
-					</tr>
-				</thead>
-				<tbody id = "list">
-				
-				</tbody>
-			</table>
+		<!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<h2>주소 목록</h2>
+			<div>
+				<!--  to do  : country x city x address limit 100 2번 join-->
+				<table border="1">
+					<thead>
+						<tr>
+							<th>countryId</th>
+							<th>country</th>
+							<th>cityId</th>
+							<th>city</th>
+							<th>addressId</th>
+							<th>address</th>
+							<th>address2</th>
+							<th>district</th>
+							<th>postalCode</th>
+							<th>phone</th>
+							<th>lastUpdate</th>
+						</tr>
+					</thead>
+					<tbody id="list">
+
+					</tbody>
+				</table>
+			</div>
 		</div>
 	</div>
-</body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="/sakila/assets/js/popper.js"></script>
+	<script src="/sakila/assets/js/bootstrap.min.js"></script>
+	<script src="/sakila/assets/js/main.js"></script>
 	<script>
-	// aside.html include
-	$("#aside").load("/sakila/aside.html");
+		$("#sidebar").load("/sakila/templates/aside.html");
 		
 		// 기본리스트 출력
 		
@@ -100,12 +79,8 @@
 			}
 		});
 	</script>
-
+</body>
 </html>
-
-
-
-
 
 
 
