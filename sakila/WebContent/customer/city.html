@@ -1,98 +1,93 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="kor">
 <head>
-<title>City</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-	body {
-		padding: 0;
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-		background-position: 0 0;
-		background-repeat: no-repeat;
-		background-attachment: fixed;
-		background-size: cover;
-		position: relative;
-		overflow-y: auto;
-	}
-	
-	#aside {
-		width: 200px;
-		height: 3000px;
-		position: fixed;
-		background: orange;
-		overflow: hidden;
-		float: left;
-	}
-	
-	#section {
-		margin-left: 300px;
-		margin-bottom: 100px;
-		background: white;
-	}
-	
-	.dan {
-		display: inline;
-	}
-</style>
+<title>Sidebar 02</title>
+<meta charset="utf-8">
+<meta name="viewport"
+	content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link
+	href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900"
+	rel="stylesheet">
+
+<link rel="stylesheet"
+	href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/sakila/assets/css/style.css">
+<link rel="stylesheet" href="/sakila/assets/css/templateStyle.css">
 </head>
 <body>
-	<div id="aside">
-		<h1>MENU</h1>
-	</div>
-	<div id="section">
-		<h1>CITY</h1>
-		<h2>city 추가</h2>
-		
-		<div>
-			<div class = "dan">
-				country 목록 : 
-				<select size = "10" id = "countryList">
+	<div class="wrapper d-flex align-items-stretch">
+		<nav id="sidebar"></nav>
+
+		<!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<!-- header -->
+			<nav class="navbar navbar-expand-sm header">
+				<ul class="navbar-nav">
+					<li><strong>City │ 도시 관리</strong></li>
+				</ul>
+			</nav>
+			<hr class = "division">
+			<!-- /header -->
 			
-				</select>
+			<h1>CITY</h1>
+			<h2>city 추가</h2>
+
+			<div>
+				<div class="dan">
+					country 목록 : <select size="10" id="countryList">
+
+					</select>
+				</div>
+				<div class="dan">
+					country id : <input type="text" id="countryId" readonly="readonly">
+					city : <input type="text" id="city">
+					<button type="button" id="addCity">추가하기</button>
+				</div>
 			</div>
-			<div class = "dan">
-				country id :
-				<input type = "text" id = "countryId" readonly = "readonly">				
-				city :
-				<input type = "text" id = "city">
-				<button type = "button" id = "addCity">추가하기</button>
+
+			<div>
+				<!-- 도시 목록 보기 -->
+				<h2>city 목록</h2>
+				<div>
+					<table border="1">
+						<thead>
+							<tr>
+								<th>city_id</th>
+								<th>city</th>
+								<th>last_update</th>
+								<th>countryId</th>
+								<th>country</th>
+								<!-- city inner join country -->
+							</tr>
+						</thead>
+						<tbody id="list">
+						</tbody>
+					</table>
+				</div>
+				<button type="button" id="preBtn">이전</button>
+				<button type="button" id="nextBtn">다음</button>
 			</div>
-		</div>
-		
-		<div>
-		<!-- 도시 목록 보기 -->
-		<h2>city 목록</h2>
-		<div>
-			<table border = "1">
-				<thead>
-					<tr>
-						<th>city_id</th>
-						<th>city</th>
-						<th>last_update</th>
-						<th>countryId</th>
-						<th>country</th> <!-- city inner join country -->
-					</tr>
-				</thead>
-				<tbody id = "list">
-				</tbody>
-			</table>
-		</div>
-		<button type = "button" id = "preBtn">이전</button>
-		<button type = "button" id = "nextBtn">다음</button>
 		</div>
 	</div>
-</body>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="/sakila/assets/js/popper.js"></script>
+	<script src="/sakila/assets/js/bootstrap.min.js"></script>
+	<script src="/sakila/assets/js/main.js"></script>
+
+	<script>
+		$("#sidebar").load("/sakila/templates/aside.html");
+	</script>
+</body>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script>
 		// aside.html include
 		$("#aside").load("/sakila/aside.html");
+		
+		// 나라 리스트
 		$.ajax({
-			url : "/sakila/selectCountryListAll",
+			url : "/sakila/customer/selectCountryListAll",
 			method : "post",
 			success : function(json) {
 				console.log(json);
@@ -115,7 +110,7 @@
 				
 			} else {
 				$.ajax({
-					url : "/sakila/address/insertCity",
+					url : "/sakila/customer/insertCity",
 					method : "post",
 					data : {countryId : $("#countryId").val(), city : $("#city").val()},
 					success : function() {
@@ -123,7 +118,7 @@
 						currentPage = 1;
 						$("#list").empty(); // 요청 중복을 막기 위해 청소
 						$.ajax({
-							url : "/sakila/address/selectCityList",
+							url : "/sakila/customer/selectCityList",
 							method : "post",
 							data : {"currentPage" : currentPage},
 							success : function(json) { // 성공했을시
@@ -154,7 +149,7 @@
 		let currentPage = 1;
 		
 		$.ajax({
-			url : "/sakila/address/selectCityList",
+			url : "/sakila/customer/selectCityList",
 			method : "post",
 			data : {"currentPage" : currentPage},
 			success : function(json) { // 성공했을시
@@ -185,7 +180,7 @@
 		
 		$("#list").empty(); // 요청 중복을 막기 위해 청소
 		$.ajax({
-			url : "/sakila/address/selectCityList",
+			url : "/sakila/customer/selectCityList",
 			method : "post",
 			data : {"currentPage" : currentPage},
 			success : function(json) { // 성공했을시
@@ -208,7 +203,7 @@
 		$("#nextBtn").click(function() {
 			let count = 0;
 			$.ajax({
-				url : "/sakila/address/selectCityCount",
+				url : "/sakila/customer/selectCityCount",
 				method : "post",
 				// 비동기화
 				async : false,
@@ -230,7 +225,7 @@
 			
 			$("#list").empty(); // 요청 중복을 막기 위해 청소
 			$.ajax({
-				url : "/sakila/address/selectCityList",
+				url : "/sakila/customer/selectCityList",
 				method : "post",
 				data : {"currentPage" : currentPage},
 				success : function(json) { // 성공했을시
@@ -254,10 +249,6 @@
 		
 	</script>
 </html>
-
-
-
-
 
 
 

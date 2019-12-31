@@ -14,7 +14,7 @@ import com.google.gson.Gson;
 import sakila.customer.model.Address;
 import sakila.customer.model.AddressDao;
 
-@WebServlet("/selectAddressList")
+@WebServlet("/customer/selectAddressList")
 public class SelectAddressList extends HttpServlet {
 	private AddressDao addressDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

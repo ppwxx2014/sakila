@@ -1,83 +1,75 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<html lang="kor">
 <head>
-<title>sakila index</title>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<style>
-	body {
-		padding: 0;
-		margin: 0;
-		width: 100%;
-		height: 100%;
-		overflow: hidden;
-		background-position: 0 0;
-		background-repeat: no-repeat;
-		background-attachment: fixed;
-		background-size: cover;
-		position: relative;
-		overflow-y: auto;
-	}
-	
-	#aside {
-		width: 200px;
-		height: 3000px;
-		position: fixed;
-		background: orange;
-		overflow: hidden;
-		float: left;
-	}
-	
-	#section {
-		margin-left: 300px;
-		margin-bottom: 100px;
-		background: white;
-	}
-</style>
+<title>Sidebar 02</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/sakila/assets/css/style.css">
+<link rel="stylesheet" href="/sakila/assets/css/templateStyle.css">
 </head>
 <body>
-	<div id = "aside">
-		<!-- aside.html include -->
+	<div class="wrapper d-flex align-items-stretch">
+		<nav id="sidebar">
+			
+		</nav>
+
+		<!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<!-- header -->
+			<nav class="navbar navbar-expand-sm header">
+				<ul class="navbar-nav">
+					<li><strong>Country │ 나라 관리</strong></li>
+				</ul>
+			</nav>
+			<hr class = "division">
+			<!-- /header -->
+			
+			<div>
+				<div>
+					Country : <input type="text" id="country">
+				</div>
+				<div>
+					<button type="button" id="addCountry">add country</button>
+				</div>
+			</div>
+
+			<h2>Country 목록</h2>
+			<div>
+				<table border="1">
+					<thead>
+						<tr>
+							<th>countryId</th>
+							<th>country</th>
+							<th>lastUpate</th>
+						</tr>
+					</thead>
+					<tbody id="list">
+					</tbody>
+				</table>
+			</div>
+			<button type="button" id="preBtn">이전</button>
+			<button type="button" id="nextBtn">다음</button>
+		</div>
 	</div>
 	
-	<div id="section">
-		<h1>Country 관리</h1>
-		<h2>Country 입력</h2>
-		<div>
-			<div>Country : <input type = "text" id = "country"></div>	
-			<div><button type = "button" id = "addCountry">add country</button></div>
-		</div>
-		
-		<h2>Country 목록</h2>
-		<div>
-			<table border = "1">
-				<thead>
-					<tr>
-						<th>countryId</th>
-						<th>country</th>
-						<th>lastUpate</th>
-					</tr>
-				</thead>
-				<tbody id = "list">
-				</tbody>
-			</table>
-		</div>
-		<button type = "button" id = "preBtn">이전</button>
-		<button type = "button" id = "nextBtn">다음</button>
-	</div>
-</body>
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="/sakila/assets/js/popper.js"></script>
+	<script src="/sakila/assets/js/bootstrap.min.js"></script>
+	<script src="/sakila/assets/js/main.js"></script>
 	
 	<script>
-		// aside.html include
-		$("#aside").load("/sakila/aside.html");
+		$("#sidebar").load("/sakila/templates/aside.html");
 	</script>
 	
 	<script>
 	let currentPage = 1;
 	
 	$.ajax({
-		url : "/sakila/address/selectCountryList",
+		url : "/sakila/customer/selectCountryList",
 		method : "post",
 		data : {currentPage : currentPage},
 		// json으로 넘어온 리턴값을 JQuery로 바꿔줌
@@ -103,7 +95,7 @@
 		
 		$("#list").empty(); // 요청 중복을 막기 위해 청소
 		$.ajax({
-			url : "/sakila/address/selectCountryList",
+			url : "/sakila/customer/selectCountryList",
 			method : "post",
 			data : {currentPage : currentPage},
 			// json으로 넘어온 리턴값을 JQuery로 바꿔줌
@@ -124,7 +116,7 @@
 		// db에서 전체 데이터 사이즈를 가지고 온다.
 		let count = 0;
 		$.ajax({
-			url : "/sakila/address/selectCountryCount",
+			url : "/sakila/customer/selectCountryCount",
 			method : "post",
 			// 비동기 요청 : false
 			async : false,
@@ -146,7 +138,7 @@
 		
 		$("#list").empty(); // 요청 중복을 막기 위해 청소
 		$.ajax({
-			url : "/sakila/address/selectCountryList",
+			url : "/sakila/customer/selectCountryList",
 			method : "post",
 			data : {currentPage : currentPage},
 			// json으로 넘어온 리턴값을 JQuery로 바꿔줌
@@ -177,7 +169,7 @@
 		}
 		
 		$.ajax({ // ajax메서드
-			url : "/sakila/address/InsertCountry", // 호출할 주소 => 서블릿으로
+			url : "/sakila/customer/insertCountry", // 호출할 주소 => 서블릿으로
 			method : "post", // 보낼 방식
 			data : {country : $("#country").val()}, // 보낼 데이터 => {이름 : 값}
 			success : function() { // ajax 실행 성공시 함수 실행
@@ -187,7 +179,7 @@
 				currentPage = 1;
 				$("#list").empty(); // 요청 중복을 막기 위해 청소
 				$.ajax({
-					url : "/sakila/address/selectCountryList",
+					url : "/sakila/customer/selectCountryList",
 					method : "post",
 					data : {currentPage : currentPage},
 					// json으로 넘어온 리턴값을 JQuery로 바꿔줌
@@ -204,13 +196,8 @@
 		});
 	});
 	</script>
+</body>
 </html>
-
-
-
-
-
-
 
 
 

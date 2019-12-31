@@ -14,7 +14,7 @@ import sakila.customer.model.City;
 import sakila.customer.model.Customer;
 import sakila.customer.service.CustomerService;
 
-@WebServlet("/insertCustomer")
+@WebServlet("/customer/insertCustomer")
 public class InsertCustomer extends HttpServlet {
 	
 	private CustomerService customerService;

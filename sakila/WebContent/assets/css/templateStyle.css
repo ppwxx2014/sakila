@@ -1,0 +1,27 @@
+@charset "UTF-8";
+
+.header {
+	background: linear-gradient(-135deg, #666699, #CC99FF);
+}
+
+.division {
+	height 3px;
+    background-color: #b1e6ff;
+}
+th {
+	background-color: #9494b8;
+	text-align: center;
+	border: thick;
+}
+td {
+	text-align: center;
+	border: thick;
+}
+
+button {
+	margin: 2px;	
+}
+
+.right {
+	float: right;
+}

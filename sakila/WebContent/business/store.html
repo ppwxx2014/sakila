@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="kor">
+<head>
+<title>Sidebar 02</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/sakila/assets/css/style.css">
+<link rel="stylesheet" href="/sakila/assets/css/templateStyle.css">
+</head>
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav id="sidebar">
+			
+		</nav>
+
+		<!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<!-- header -->
+			<nav class="navbar navbar-expand-sm header">
+				<ul class="navbar-nav">
+					<li><strong>Store │ 매장  · 직원 관리</strong></li>
+				</ul>
+			</nav>
+			<!-- /header -->
+			<hr class = "division">
+			
+			<header>
+				<button class = "right btn btn-outline-info" id = "storeInfo">매장 정보</button>
+				<button class = "right btn btn-outline-info">직원 정보</button>
+				<button class = "right btn btn-outline-info">대여 관리</button>
+				<button class = "right btn btn-outline-info">지불 내역</button>
+			</header>
+			
+			<!-- 메뉴바 -->
+			<div>	
+				
+			</div>
+			
+			<table class = "table table-hover">
+				<thead id = "informs" class = "rows">
+					
+				</thead>
+			</table>
+		</div>
+	</div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="/sakila/assets/js/popper.js"></script>
+	<script src="/sakila/assets/js/bootstrap.min.js"></script>
+	<script src="/sakila/assets/js/main.js"></script>
+	
+	<script>
+	$("#sidebar").load("/sakila/templates/aside.html");
+	
+	// 초기화 
+	$("#informs").hide();
+	
+	$.ajax({
+		url: "/sakila/business/selectStoreList",
+		method: "post",
+		success: function(json) {
+			console.log(json);
+			$(json).each(function(index, item) {
+				let html = "<tr><div>";
+				html += "<td>"+item.storeId+"</td>";
+				html += "<td>"+item.address.address+"</td>";
+				html += "<td>"+item.staff.firstName+"</td>";
+				html += "<td>"+item.lastUpdate+"</td>";
+				html += "</div></tr>";
+				// 저장
+				$("#informs").append(html);
+			});
+		}
+	});
+	
+	$("#storeInfo").click(function() {
+		let targetRow = $("informs").closest("thead").next(".rows");
+		targetRow.show().find("div").slideToggle('slow');
+	});
+	</script>
+</body>
+</html>
+
+
+
+
+
+

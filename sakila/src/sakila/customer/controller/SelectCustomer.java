@@ -15,7 +15,7 @@ import com.google.gson.Gson;
 import sakila.customer.model.Customer;
 import sakila.customer.service.CustomerService;
 
-@WebServlet("/selectCustomer")
+@WebServlet("/customer/selectCustomer")
 public class SelectCustomer extends HttpServlet {
 	private CustomerService customerService;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

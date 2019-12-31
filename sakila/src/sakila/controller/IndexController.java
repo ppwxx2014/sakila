@@ -29,7 +29,7 @@ import sakila.iventory.model.FilmTextDao;
 import sakila.iventory.model.InventoryDao;
 import sakila.iventory.model.LanguageDao;
 
-@WebServlet("/IndexController")
+@WebServlet("/indexController")
 public class IndexController extends HttpServlet {
 	private CountryDao countryDao;
 	private CityDao cityDao;

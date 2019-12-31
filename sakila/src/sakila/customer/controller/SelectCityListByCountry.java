@@ -15,7 +15,7 @@ import sakila.customer.model.City;
 import sakila.customer.model.CityDao;
 
 
-@WebServlet("/selectCityListByCountry")
+@WebServlet("/customer/selectCityListByCountry")
 public class SelectCityListByCountry extends HttpServlet {
 	private CityDao cityDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -15,7 +15,7 @@ import sakila.customer.model.CityDao;
 import sakila.customer.model.Country;
 import sakila.customer.model.CountryDao;
 
-@WebServlet("/address/insertCity")
+@WebServlet("/customer/insertCity")
 public class InsertCity extends HttpServlet {
 	private CityDao cityDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

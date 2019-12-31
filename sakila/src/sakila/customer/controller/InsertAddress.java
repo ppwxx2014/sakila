@@ -12,7 +12,7 @@ import sakila.customer.model.Address;
 import sakila.customer.model.AddressDao;
 import sakila.customer.model.City;
 
-@WebServlet("/insertAddress")
+@WebServlet("/customer/insertAddress")
 public class InsertAddress extends HttpServlet {
 	private AddressDao addressDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

@@ -13,7 +13,7 @@ import com.google.gson.Gson;
 import sakila.customer.model.CountryDao;
 
 
-@WebServlet("/address/selectCountryCount")
+@WebServlet("/customer/selectCountryCount")
 public class SelectCountryCount extends HttpServlet {
 	private CountryDao countryDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {

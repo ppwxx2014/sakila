@@ -4,7 +4,7 @@ import sakila.customer.model.Address;
 
 public class Store {
 	private int storeId;
-	private int managerStaffId;
+	private Staff staff;
 	private Address address;
 	private String lastUpdate;
 	
@@ -14,11 +14,11 @@ public class Store {
 	public void setStoreId(int storeId) {
 		this.storeId = storeId;
 	}
-	public int getManagerStaffId() {
-		return managerStaffId;
+	public Staff getStaff() {
+		return staff;
 	}
-	public void setManagerStaffId(int managerStaffId) {
-		this.managerStaffId = managerStaffId;
+	public void setStaff(Staff staff) {
+		this.staff = staff;
 	}
 	public Address getAddress() {
 		return address;
@@ -33,11 +33,7 @@ public class Store {
 		this.lastUpdate = lastUpdate;
 	}
 	
-	@Override
-	public String toString() {
-		return "Store [storeId=" + storeId + ", managerStaffId=" + managerStaffId + ", address=" + address
-				+ ", lastUpdate=" + lastUpdate + "]";
-	}
+	
 	
 	
 }

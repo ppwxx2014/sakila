@@ -8209,7 +8209,7 @@ h1, h2, h3, h4, h5,
 #sidebar {
   min-width: 250px;
   max-width: 250px;
-  background: #866ec7;
+  background: linear-gradient(#8E54E9, #4776E6 ) fixed;
   color: #fff;
   -webkit-transition: all 0.3s;
   -o-transition: all 0.3s;

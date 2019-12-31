@@ -11,12 +11,12 @@ import javax.servlet.http.HttpServletResponse;
 import sakila.customer.model.Country;
 import sakila.customer.model.CountryDao;
 
-@WebServlet("/address/InsertCountry")
+@WebServlet("/customer/insertCountry")
 public class InsertCountry extends HttpServlet {
 	private CountryDao countryDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		String country = request.getParameter("country");
-		System.out.println("---insertAddress Servlet?‹¤?–‰---");
+		System.out.println("---insertAddress Servlet?ï¿½ï¿½?ï¿½ï¿½---");
 		System.out.println("requestParameter : " + country);
 		
 		countryDao = new CountryDao();
