@@ -1,6 +1,7 @@
 package sakila.business.model;
 
 import sakila.customer.model.Customer;
+import sakila.iventory.model.Film;
 import sakila.iventory.model.Inventory;
 
 public class Rental {
@@ -11,7 +12,8 @@ public class Rental {
 	private String returnDate;
 	private Staff staff;
 	private String lastUpdate;
-	
+	private Store store;
+	private Film film;
 	public int getRentalId() {
 		return rentalId;
 	}
@@ -24,11 +26,11 @@ public class Rental {
 	public void setRentalDate(String rentalDate) {
 		this.rentalDate = rentalDate;
 	}
-	public Inventory getIventory() {
+	public Inventory getInventory() {
 		return inventory;
 	}
-	public void setIventory(Inventory iventory) {
-		this.inventory = iventory;
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 	public Customer getCustomer() {
 		return customer;
@@ -54,10 +56,20 @@ public class Rental {
 	public void setLastUpdate(String lastUpdate) {
 		this.lastUpdate = lastUpdate;
 	}
-	
-	@Override
-	public String toString() {
-		return "Rental [rentalId=" + rentalId + ", rentalDate=" + rentalDate + ", iventory=" + inventory + ", customer="
-				+ customer + ", returnDate=" + returnDate + ", staff=" + staff + ", lastUpdate=" + lastUpdate + "]";
+	public Store getStore() {
+		return store;
 	}
+	public void setStore(Store store) {
+		this.store = store;
+	}
+	public Film getFilm() {
+		return film;
+	}
+	public void setFilm(Film film) {
+		this.film = film;
+	}
+	
+	
+	
+	
 }

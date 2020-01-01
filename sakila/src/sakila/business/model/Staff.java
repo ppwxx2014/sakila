@@ -5,9 +5,8 @@ import java.sql.Blob;
 import sakila.customer.model.Address;
 
 public class Staff {
-	private String staffId;
-	private String firstName;
-	private String lastName; 
+	private int staffId;
+	private String name;
 	private Address address;
 	private Blob picture;
 	private String email;
@@ -16,23 +15,18 @@ public class Staff {
 	private String username;
 	private String password;
 	private String lastUpdate;
-	public String getStaffId() {
+	
+	public int getStaffId() {
 		return staffId;
 	}
-	public void setStaffId(String staffId) {
+	public void setStaffId(int staffId) {
 		this.staffId = staffId;
 	}
-	public String getFirstName() {
-		return firstName;
+	public String getName() {
+		return name;
 	}
-	public void setFirstName(String firstName) {
-		this.firstName = firstName;
-	}
-	public String getLastName() {
-		return lastName;
-	}
-	public void setLastName(String lastName) {
-		this.lastName = lastName;
+	public void setName(String name) {
+		this.name = name;
 	}
 	public Address getAddress() {
 		return address;
@@ -83,10 +77,5 @@ public class Staff {
 		this.lastUpdate = lastUpdate;
 	}
 	
-	@Override
-	public String toString() {
-		return "Staff [staffId=" + staffId + ", firstName=" + firstName + ", lastName=" + lastName + ", address="
-				+ address + ", picture=" + picture + ", email=" + email + ", storeId=" + storeId + ", active=" + active
-				+ ", username=" + username + ", password=" + password + ", lastUpdate=" + lastUpdate + "]";
-	}
+	
 }

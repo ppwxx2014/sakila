@@ -8,11 +8,11 @@ public class Customer {
 	private int customerId;
 	private String firstName;
 	private String lastName;
+	private String fullname;
 	private String email;
 	private int active;
 	private String createDate;
 	private String lastUpdate;
-	
 	public Store getStore() {
 		return store;
 	}
@@ -28,8 +28,8 @@ public class Customer {
 	public int getCustomerId() {
 		return customerId;
 	}
-	public void setCustomerId(int cuntomerId) {
-		this.customerId = cuntomerId;
+	public void setCustomerId(int customerId) {
+		this.customerId = customerId;
 	}
 	public String getFirstName() {
 		return firstName;
@@ -42,6 +42,12 @@ public class Customer {
 	}
 	public void setLastName(String lastName) {
 		this.lastName = lastName;
+	}
+	public String getFullname() {
+		return fullname;
+	}
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
 	}
 	public String getEmail() {
 		return email;
@@ -68,12 +74,6 @@ public class Customer {
 		this.lastUpdate = lastUpdate;
 	}
 	
-	@Override
-	public String toString() {
-		return "Customer [address=" + address + ", cuntomerId=" + customerId + ", firstName=" + firstName
-				+ ", lastName=" + lastName + ", email=" + email + ", active=" + active + ", createDate=" + createDate
-				+ ", lastUpdate=" + lastUpdate + "]";
-	}
 	
 	
 }

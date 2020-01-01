@@ -28,23 +28,18 @@
 			<!-- /header -->
 			<hr class = "division">
 			
-			<header>
-				<button class = "right btn btn-outline-info" id = "storeInfo">매장 정보</button>
-				<button class = "right btn btn-outline-info">직원 정보</button>
-				<button class = "right btn btn-outline-info">대여 관리</button>
-				<button class = "right btn btn-outline-info">지불 내역</button>
-			</header>
-			
 			<!-- 메뉴바 -->
-			<div>	
-				
+			<div>
+				<button class = "right btn btn-outline-info" id = "paymentInfo">지불 내역</button>
+				<button class = "right btn btn-outline-info" id = "rentalInfo">대여 관리</button>
+				<button class = "right btn btn-outline-info" id = "staffInfo">직원 정보</button>
+				<button class = "right btn btn-outline-info" id = "storeInfo">매장 정보</button>
 			</div>
 			
-			<table class = "table table-hover">
-				<thead id = "informs" class = "rows">
-					
-				</thead>
-			</table>
+			<!-- 리스트 출력 -->
+			<div id = "info">
+			
+			</div>
 		</div>
 	</div>
 	
@@ -56,31 +51,121 @@
 	<script>
 	$("#sidebar").load("/sakila/templates/aside.html");
 	
-	// 초기화 
-	$("#informs").hide();
 	
-	$.ajax({
-		url: "/sakila/business/selectStoreList",
-		method: "post",
-		success: function(json) {
-			console.log(json);
-			$(json).each(function(index, item) {
-				let html = "<tr><div>";
-				html += "<td>"+item.storeId+"</td>";
-				html += "<td>"+item.address.address+"</td>";
-				html += "<td>"+item.staff.firstName+"</td>";
-				html += "<td>"+item.lastUpdate+"</td>";
-				html += "</div></tr>";
-				// 저장
-				$("#informs").append(html);
+		// 매장 정보
+		$("#storeInfo").click(function() {
+			$.ajax({
+				url : "/sakila/business/selectStoreList",
+				method : "post",
+				success : function(json) {
+					console.log("매장 정보 리스트 출력");
+					console.log(json);
+					$("#info").empty();
+					let html = "<table class = 'table table-hover'>";
+					html += "<thead>";
+					html += "<tr>";
+					html += "<th>주소 번호</th>";
+					html += "<th>주소</th>";
+					html += "<th>직원 이름</th>";
+					html += "<th>수정 날짜</th>";
+					html += "</tr>";
+					html += "</thead>";
+					html += "<tbody>";
+					$(json).each(function(index, item) {
+						html += "<tr>";
+						html += "<td>" + item.storeId + "</td>";
+						html += "<td>" + item.address.address + "</td>";
+						html += "<td>" + item.staff.name + "</td>";
+						html += "<td>" + item.lastUpdate + "</td>";
+						html += "</tr>";
+					});
+					// 저장
+					$("#info").append(html);
+					html += "</tbody>";
+					html += "</table>";
+				}
 			});
-		}
-	});
-	
-	$("#storeInfo").click(function() {
-		let targetRow = $("informs").closest("thead").next(".rows");
-		targetRow.show().find("div").slideToggle('slow');
-	});
+		});
+		
+		// 직원 정보
+		$("#staffInfo").click(function() {
+			$.ajax({
+				url : "/sakila/business/selectStaffList",
+				method : "post",
+				success : function(json) {
+					console.log(json);
+					$("#info").empty();
+					let html = "<table class = 'table table-hover'>";
+					html += "<thead>";
+					html += "<tr>";
+					html += "<th>매장 번호</th>";
+					html += "<th>직원 번호</th>";
+					html += "<th>이름</th>";
+					html += "<th>주소</th>";
+					html += "<th>이메일</th>";
+					html += "<th>비밀번호</th>";
+					html += "<th>수정 날짜</th>";
+					html += "</tr>";
+					html += "</thead>";
+					html += "<tbody>";
+					$(json).each(function(index, item) {
+						html += "<tr>";
+						html += "<td>" + item.storeId + "</td>";
+						html += "<td>" + item.staffId + "</td>";
+						html += "<td>" + item.name + "</td>";
+						html += "<td>" + item.address.address + "</td>";
+						html += "<td>" + item.email + "</td>";
+						html += "<td>" + item.password + "</td>";
+						html += "<td>" + item.lastUpdate + "</td>";
+						html += "</tr>";
+					});
+					// 저장
+					$("#info").append(html);
+					html += "</tbody>";
+					html += "</table>";
+				}
+			});
+		});
+		
+		// 대여 정보
+		$("#rentalInfo").click(function() {
+			$.ajax({
+				url : "/sakila/business/selectRentalList",
+				method : "post",
+				success : function(json) {
+					console.log(json);
+					/* $("#info").empty();
+					let html = "<table class = 'table table-hover'>";
+					html += "<thead>";
+					html += "<tr>";
+					html += "<th>매장 번호</th>";
+					html += "<th>직원 번호</th>";
+					html += "<th>이름</th>";
+					html += "<th>주소</th>";
+					html += "<th>이메일</th>";
+					html += "<th>비밀번호</th>";
+					html += "<th>수정 날짜</th>";
+					html += "</tr>";
+					html += "</thead>";
+					html += "<tbody>";
+					$(json).each(function(index, item) {
+						html += "<tr>";
+						html += "<td>" + item.storeId + "</td>";
+						html += "<td>" + item.staffId + "</td>";
+						html += "<td>" + item.name + "</td>";
+						html += "<td>" + item.address.address + "</td>";
+						html += "<td>" + item.email + "</td>";
+						html += "<td>" + item.password + "</td>";
+						html += "<td>" + item.lastUpdate + "</td>";
+						html += "</tr>";
+					});
+					// 저장
+					$("#info").append(html);
+					html += "</tbody>";
+					html += "</table>"; */
+				}
+			});
+		});
 	</script>
 </body>
 </html>

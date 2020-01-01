@@ -36,7 +36,7 @@ public class StoreDao {
 				store.setAddress(new Address());
 				store.getAddress().setAddress(rs.getString("ad.address"));
 				store.setStaff(new Staff());
-				store.getStaff().setFirstName(rs.getString("staffName"));
+				store.getStaff().setName(rs.getString("staffName"));
 				store.setLastUpdate(rs.getString("s.last_update"));
 				
 				list.add(store);
