@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="kor">
 <head>
-<title>Sidebar 02</title>
+<title>Business</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -22,7 +22,9 @@
 			<!-- header -->
 			<nav class="navbar navbar-expand-sm header">
 				<ul class="navbar-nav">
-					<li><strong>Store │ 매장  · 직원 관리</strong></li>
+					<li>
+						<strong><a href = "/sakila/business/store.html">Store</a><span> │ 매장  · 직원 관리</span></strong>
+					</li>
 				</ul>
 			</nav>
 			<!-- /header -->
@@ -36,8 +38,18 @@
 				<button class = "right btn btn-outline-info" id = "storeInfo">매장 정보</button>
 			</div>
 			
+			<!-- 알림창 -->
+			<div>
+				기록은 가장 최근 기록만 보여줍니다!
+				<span id = "rows"></span>
+			</div>
+			
 			<!-- 리스트 출력 -->
 			<div id = "info">
+			
+			</div>
+			
+			<div id = "paging">
 			
 			</div>
 		</div>
@@ -51,121 +63,281 @@
 	<script>
 	$("#sidebar").load("/sakila/templates/aside.html");
 	
+	let currentPage = 1; // 페이지 초기화
 	
-		// 매장 정보
-		$("#storeInfo").click(function() {
-			$.ajax({
-				url : "/sakila/business/selectStoreList",
-				method : "post",
-				success : function(json) {
-					console.log("매장 정보 리스트 출력");
-					console.log(json);
-					$("#info").empty();
-					let html = "<table class = 'table table-hover'>";
-					html += "<thead>";
+	// 매장 정보
+	$("#storeInfo").click(function() {
+		$.ajax({
+			url : "/sakila/business/selectStoreList",
+			method : "post",
+			success : function(json) {
+				console.log("store success");
+				console.log(json);
+				$("#info").empty();
+				let html = "<table class = 'table table-hover'>";
+				html += "<thead>";
+				html += "<tr>";
+				html += "<th>주소 번호</th>";
+				html += "<th>주소</th>";
+				html += "<th>직원 이름</th>";
+				html += "<th>수정 날짜</th>";
+				html += "</tr>";
+				html += "</thead>";
+				html += "<tbody>";
+				$(json).each(function(index, item) {
 					html += "<tr>";
-					html += "<th>주소 번호</th>";
-					html += "<th>주소</th>";
-					html += "<th>직원 이름</th>";
-					html += "<th>수정 날짜</th>";
+					html += "<td>" + item.storeId + "</td>";
+					html += "<td>" + item.address.address + "</td>";
+					html += "<td>" + item.staff.name + "</td>";
+					html += "<td>" + item.lastUpdate + "</td>";
 					html += "</tr>";
-					html += "</thead>";
-					html += "<tbody>";
-					$(json).each(function(index, item) {
-						html += "<tr>";
-						html += "<td>" + item.storeId + "</td>";
-						html += "<td>" + item.address.address + "</td>";
-						html += "<td>" + item.staff.name + "</td>";
-						html += "<td>" + item.lastUpdate + "</td>";
-						html += "</tr>";
-					});
-					// 저장
-					$("#info").append(html);
-					html += "</tbody>";
-					html += "</table>";
-				}
-			});
+				});
+				// 저장
+				$("#info").append(html);
+				html += "</tbody>";
+				html += "</table>";
+			}
+		});
+	});
+	
+	// 직원 정보
+	$("#staffInfo").click(function() {
+		$.ajax({
+			url : "/sakila/business/selectStaffList",
+			method : "post",
+			success : function(json) {
+				console.log(json);
+				$("#info").empty();
+				let html = "<table class = 'table table-hover'>";
+				html += "<thead>";
+				html += "<tr>";
+				html += "<th>매장 번호</th>";
+				html += "<th>직원 번호</th>";
+				html += "<th>이름</th>";
+				html += "<th>주소</th>";
+				html += "<th>이메일</th>";
+				html += "<th>비밀번호</th>";
+				html += "<th>수정 날짜</th>";
+				html += "</tr>";
+				html += "</thead>";
+				html += "<tbody>";
+				$(json).each(function(index, item) {
+					html += "<tr>";
+					html += "<td>" + item.storeId + "</td>";
+					html += "<td>" + item.staffId + "</td>";
+					html += "<td>" + item.name + "</td>";
+					html += "<td>" + item.address.address + "</td>";
+					html += "<td>" + item.email + "</td>";
+					html += "<td>" + item.password + "</td>";
+					html += "<td>" + item.lastUpdate + "</td>";
+					html += "</tr>";
+				});
+				// 저장
+				$("#info").append(html);
+				html += "</tbody>";
+				html += "</table>";
+			}
+		});
+	});
+	
+	// :::::::::::::::::: rentalList :::::::::::::::::: //
+	// 대여 정보
+	var rentalList = function() {
+		$.ajax({
+			url : "/sakila/business/selectRentalList",
+			method : "post",
+			data : { currentPage : currentPage },
+			success : function(json) {
+				console.log(json);
+				$("#info").empty();
+				let html = "<table class = 'table table-hover'>";
+				html += "<thead>";
+				html += "<tr>";
+				html += "<th>매장 번호</th>";
+				html += "<th>매장 주소</th>";
+				html += "<th>직원 이름</th>";
+				html += "<th>고객 이름</th>";
+				html += "<th>필름 번호</th>";
+				html += "<th>필름 제목</th>";
+				html += "<th>빌린 날짜</th>";
+				html += "<th>반납 날짜</th>";
+				html += "<th>수정 날짜</th>";
+				html += "</tr>";
+				html += "</thead>";
+				html += "<tbody>";
+				$(json).each(function(index, item) {
+					html += "<tr>";
+					html += "<td>" + item.store.storeId + "</td>";
+					html += "<td>" + item.staff.address.address + "</td>";
+					html += "<td>" + item.staff.name + "</td>";
+					html += "<td>" + item.customer.fullname + "</td>";
+					html += "<td>" + item.film.filmId + "</td>";
+					html += "<td>" + item.film.title + "</td>";
+					html += "<td>" + item.rentalDate + "</td>";
+					html += "<td>" + item.returnDate + "</td>";
+					html += "<td>" + item.lastUpdate + "</td>";
+					html += "</tr>";
+				});
+				// 저장
+				$("#info").append(html);
+				html += "</tbody>";
+				html += "</table>";
+				
+				// 페이징 버튼
+				$("#paging").empty();
+				let btn = "<button class = 'btn btn-outline-info' id = 'preBtn'>이전</button>";
+				btn += "<button class = 'btn btn-outline-info' id = 'nextBtn'>다음</button>";
+				$("#paging").append(btn);
+			}
+		});
+	};
+	
+	$("#rentalInfo").click(function() {
+		// 목록 출력
+		rentalList();
+	});
+	
+	//이전 버튼
+	$(document).on('click', '#preBtn', function() {
+		if(currentPage === 1){
+			alert("현재 1페이지 입니다!");
+			return;
+		}
+		currentPage -= 1;
+		console.log("현재 currentPage: " + currentPage);
+		
+		// 목록 출력
+		rentalList();
+	});
+	
+	// 다음 버튼
+	$(document).on('click', '#nextBtn', function() {
+		let count = 0;
+		$.ajax({
+			url : "/sakila/business/selectRentalCountGroupByName",
+			method : "post",
+			async : false,
+			data : { currentPage : currentPage },
+			success : function(json) {
+				console.log(json);
+				count = Number(json);
+				console.log("count: " + count);
+			}
 		});
 		
-		// 직원 정보
-		$("#staffInfo").click(function() {
-			$.ajax({
-				url : "/sakila/business/selectStaffList",
-				method : "post",
-				success : function(json) {
-					console.log(json);
-					$("#info").empty();
-					let html = "<table class = 'table table-hover'>";
-					html += "<thead>";
+		let lastPage = Math.ceil(count / 10);
+		console.log("lastPage: " + lastPage);
+		if(currentPage == lastPage) {
+			alert("마지막 페이지 입니다!");
+			return;
+		}
+		
+		currentPage += 1;
+		console.log("현재 currnetPage: " + currentPage);
+		
+		// 목록 출력
+		rentalList();
+	});
+	// :::::::::::::::::: /rentalList :::::::::::::::::: //
+	
+	// :::::::::::::::::: paymentList :::::::::::::::::: //
+	var paymentList = function() {
+		$.ajax({
+			url : "/sakila/business/selectPaymentList",
+			method : "post",
+			data : { currentPage : currentPage },
+			success : function(json) {
+				console.log(json);
+				$("#info").empty();
+				let html = "<table class = 'table table-hover'>";
+				html += "<thead>";
+				html += "<tr>";
+				html += "<th>매장 번호</th>";
+				html += "<th>직원 이름</th>";
+				html += "<th>고객 이름</th>";
+				html += "<th>필름 번호</th>";
+				html += "<th>필름 제목</th>";
+				html += "<th>빌린 날짜</th>";
+				html += "<th>대여료 지불 날짜</th>";
+				html += "<th>대여료</th>";
+				html += "<th>수정 날짜</th>";
+				html += "</tr>";
+				html += "</thead>";
+				html += "<tbody>";
+				$(json).each(function(index, item) {
 					html += "<tr>";
-					html += "<th>매장 번호</th>";
-					html += "<th>직원 번호</th>";
-					html += "<th>이름</th>";
-					html += "<th>주소</th>";
-					html += "<th>이메일</th>";
-					html += "<th>비밀번호</th>";
-					html += "<th>수정 날짜</th>";
+					html += "<td>" + item.store.storeId + "</td>";
+					html += "<td>" + item.staff.name + "</td>";
+					html += "<td>" + item.customer.fullname + "</td>";
+					html += "<td>" + item.film.filmId + "</td>";
+					html += "<td>" + item.film.title + "</td>";
+					html += "<td>" + item.rental.rentalDate + "</td>";
+					html += "<td>" + item.paymentDate + "</td>";
+					html += "<td>" + item.amount + "</td>";
+					html += "<td>" + item.lastUpdate + "</td>";
 					html += "</tr>";
-					html += "</thead>";
-					html += "<tbody>";
-					$(json).each(function(index, item) {
-						html += "<tr>";
-						html += "<td>" + item.storeId + "</td>";
-						html += "<td>" + item.staffId + "</td>";
-						html += "<td>" + item.name + "</td>";
-						html += "<td>" + item.address.address + "</td>";
-						html += "<td>" + item.email + "</td>";
-						html += "<td>" + item.password + "</td>";
-						html += "<td>" + item.lastUpdate + "</td>";
-						html += "</tr>";
-					});
-					// 저장
-					$("#info").append(html);
-					html += "</tbody>";
-					html += "</table>";
-				}
-			});
+				});
+				// 저장
+				$("#info").append(html);
+				html += "</tbody>";
+				html += "</table>";
+				
+				// 페이징 버튼
+				$("#paging").empty();
+				let btn = "<button class = 'btn btn-outline-info' id = 'payPreBtn'>이전</button>";
+				btn += "<button class = 'btn btn-outline-info' id = 'payNextBtn'>다음</button>";
+				$("#paging").append(btn);
+			}
+		});
+	};
+	
+	$("#paymentInfo").click(function() {
+		// 목록 출력
+		paymentList();
+	});
+	
+	//이전 버튼
+	$(document).on('click', '#payPreBtn', function() {
+		if(currentPage === 1){
+			alert("현재 1페이지 입니다!");
+			return;
+		}
+		currentPage -= 1;
+		console.log("현재 currentPage: " + currentPage);
+		
+		// 목록 출력
+		paymentList();
+	});
+	
+	// 다음 버튼
+	$(document).on('click', '#payNextBtn', function() {
+		let count = 0;
+		$.ajax({
+			url : "/sakila/business/selectPaymentCountGroupByName",
+			method : "post",
+			async : false,
+			data : { currentPage : currentPage },
+			success : function(json) {
+				console.log(json);
+				count = Number(json);
+				console.log("count: " + count);
+			}
 		});
 		
-		// 대여 정보
-		$("#rentalInfo").click(function() {
-			$.ajax({
-				url : "/sakila/business/selectRentalList",
-				method : "post",
-				success : function(json) {
-					console.log(json);
-					/* $("#info").empty();
-					let html = "<table class = 'table table-hover'>";
-					html += "<thead>";
-					html += "<tr>";
-					html += "<th>매장 번호</th>";
-					html += "<th>직원 번호</th>";
-					html += "<th>이름</th>";
-					html += "<th>주소</th>";
-					html += "<th>이메일</th>";
-					html += "<th>비밀번호</th>";
-					html += "<th>수정 날짜</th>";
-					html += "</tr>";
-					html += "</thead>";
-					html += "<tbody>";
-					$(json).each(function(index, item) {
-						html += "<tr>";
-						html += "<td>" + item.storeId + "</td>";
-						html += "<td>" + item.staffId + "</td>";
-						html += "<td>" + item.name + "</td>";
-						html += "<td>" + item.address.address + "</td>";
-						html += "<td>" + item.email + "</td>";
-						html += "<td>" + item.password + "</td>";
-						html += "<td>" + item.lastUpdate + "</td>";
-						html += "</tr>";
-					});
-					// 저장
-					$("#info").append(html);
-					html += "</tbody>";
-					html += "</table>"; */
-				}
-			});
-		});
+		let lastPage = Math.ceil(count / 10);
+		console.log("lastPage: " + lastPage);
+		if(currentPage == lastPage) {
+			alert("마지막 페이지 입니다!");
+			return;
+		}
+		
+		currentPage += 1;
+		console.log("현재 currnetPage: " + currentPage);
+		
+		// 목록 출력
+		paymentList();
+	});
+	// :::::::::::::::::: /paymentList :::::::::::::::::: //
 	</script>
 </body>
 </html>

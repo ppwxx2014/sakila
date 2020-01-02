@@ -1,16 +1,20 @@
 package sakila.business.model;
 
 import sakila.customer.model.Customer;
+import sakila.iventory.model.Film;
+import sakila.iventory.model.Inventory;
 
 public class Payment {
 	private int paymentId;
 	private Customer customer;
 	private Staff staff;
+	private Store store;
+	private Film film;
+	private Inventory inventory;
 	private Rental rental;
 	private double amount;
 	private String paymentDate;
 	private String lastUpdate;
-	
 	public int getPaymentId() {
 		return paymentId;
 	}
@@ -28,6 +32,24 @@ public class Payment {
 	}
 	public void setStaff(Staff staff) {
 		this.staff = staff;
+	}
+	public Store getStore() {
+		return store;
+	}
+	public void setStore(Store store) {
+		this.store = store;
+	}
+	public Film getFilm() {
+		return film;
+	}
+	public void setFilm(Film film) {
+		this.film = film;
+	}
+	public Inventory getInventory() {
+		return inventory;
+	}
+	public void setInventory(Inventory inventory) {
+		this.inventory = inventory;
 	}
 	public Rental getRental() {
 		return rental;
@@ -54,9 +76,5 @@ public class Payment {
 		this.lastUpdate = lastUpdate;
 	}
 	
-	@Override
-	public String toString() {
-		return "Payment [paymentId=" + paymentId + ", customer=" + customer + ", staff=" + staff + ", rental=" + rental
-				+ ", amount=" + amount + ", paymentDate=" + paymentDate + ", lastUpdate=" + lastUpdate + "]";
-	}
+	
 }
