@@ -1,0 +1,205 @@
+<!doctype html>
+<html lang="kor">
+<head>
+<title>Film</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+<link href="https://fonts.googleapis.com/css?family=Poppins:300,400,500,600,700,800,900" rel="stylesheet">
+
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="/sakila/assets/css/style.css">
+<link rel="stylesheet" href="/sakila/assets/css/templateStyle.css">
+</head>
+<body>
+	<div class="wrapper d-flex align-items-stretch">
+		<nav id="sidebar">
+			
+		</nav>
+
+		<!-- Page Content  -->
+		<div id="content" class="p-4 p-md-5 pt-5">
+			<!-- header -->
+			<nav class="navbar navbar-expand-sm header">
+				<ul class="navbar-nav">
+					<strong><a href = "/sakila/inventory/film.html">Film</a><span> │ 필름  · 필름 관리</span></strong>
+				</ul>
+			</nav>
+			<hr class = "division">
+			<!-- /header -->
+			
+			<!-- 알림창 -->
+			<div>
+				<span id = "rows"></span>
+			</div>
+			
+			<!-- 검색 -->
+			<div>
+				연령대 선택
+				<select id = "ratingList">
+				
+				</select>
+			</div>
+			<br>
+			<!-- 리스트 출력 -->
+			<div id = "info">
+			</div>
+			
+			<div id = "paging">
+			
+			</div>
+		</div>
+	</div>
+	
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="/sakila/assets/js/popper.js"></script>
+	<script src="/sakila/assets/js/bootstrap.min.js"></script>
+	<script src="/sakila/assets/js/main.js"></script>
+	
+	<script>
+		$("#sidebar").load("/sakila/templates/aside.html");
+		
+		// :::::::::::::::::::::::: /filmList :::::::::::::::::::::::: //
+		let currentPage = 1; // 페이지 초기화
+		let rating = null;
+		// 대여 정보
+		var filmList = function() {
+			$.ajax({
+				url : "/sakila/inventory/selectFilmList",
+				method : "post",
+				data : { "currentPage" : currentPage, "rating" : rating },
+				success : function(json) {
+					console.log(json);
+					$("#info").empty();
+					let html = "<table class = 'table table-hover'>";
+					html += "<thead>";
+					html += "<tr>";
+					html += "<th>필름</th>";
+					html += "<th>필름 내용</th>";
+					html += "<th>출시일</th>";
+					html += "<th>언어</th>";
+					html += "<th>대여 기간</th>";
+					html += "<th>대여 가격</th>";
+					html += "<th>필름 길이</th>";
+					html += "<th>교체 비용</th>";
+					html += "<th>연령 등급</th>";
+					html += "<th>출연 배우</th>";
+					html += "<th>수정 날짜</th>";
+					html += "</tr>";
+					html += "</thead>";
+					html += "<tbody>";
+					let description = null; 
+					$(json).each(function(index, item) {
+						
+						if(item.description.length > 20) {
+							description = item.description.substring(index, index + 10) + "...";
+						}
+						html += "<tr>";
+						html += "<td>" + item.filmId + " " + item.title + "</td>";
+						html += "<td>" + description + "</td>";
+						html += "<td>" + item.releaseYear + "</td>";
+						html += "<td>" + item.language.name + "</td>";
+						html += "<td>" + item.rentalDuration + "</td>";
+						html += "<td>" + "$" + item.rentalRate + "</td>";
+						html += "<td>" + item.length + "</td>";
+						html += "<td>" + "$" + item.replacementCost + "</td>";
+						html += "<td>" + item.rating + "</td>";
+						html += "<td>" + item.specialFeatures + "</td>";
+						html += "<td>" + item.lastUpdate + "</td>";
+						html += "</tr>";
+					});
+					// 저장
+					$("#info").append(html);
+					let tmp = "</tbody>";
+					tmp += "</table>";
+					$("#info").append(tmp);
+					
+					// 페이징 버튼
+					$("#paging").empty();
+					let btn = "<button class = 'btn btn-outline-info' id = 'preBtn'>이전</button>";
+					btn += "<button class = 'btn btn-outline-info' id = 'nextBtn'>다음</button>";
+					$("#paging").append(btn);
+				}
+			});
+		};
+		
+		// 필름 목록 출력
+		filmList();
+		
+		// 페이징
+		//이전 버튼
+		$(document).on('click', '#preBtn', function() {
+			if(currentPage === 1) {
+				alert("현재 1페이지 입니다!");
+				return;
+			}
+			currentPage -= 1;
+			console.log("현재 currentPage: " + currentPage);
+			
+			// 목록 출력
+			filmList();
+		});
+		
+		// 다음 버튼
+		$(document).on('click', '#nextBtn', function() {
+			let count = 0;
+			$.ajax({
+				url : "/sakila/inventory/selectFilmCount",
+				method : "post",
+				async : false,
+				data : { currentPage : currentPage },
+				success : function(json) {
+					console.log(json);
+					count = Number(json);
+					console.log("count: " + count);
+				}
+			});
+			
+			let lastPage = Math.ceil(count / 10);
+			console.log("lastPage: " + lastPage);
+			if(currentPage == lastPage) {
+				alert("마지막 페이지 입니다!");
+				return;
+			}
+			
+			currentPage += 1;
+			console.log("현재 currnetPage: " + currentPage);
+			
+			// 목록 출력
+			filmList();
+		});
+		// :::::::::::::::::::::::: /filmList :::::::::::::::::::::::: //
+		
+		// 연령대 리스트 출력
+		$.ajax({
+			url: "/sakila/inventory/selectFilmRating",
+			method: "post",
+			success: function(json) {
+				console.log(json);
+				$("#ratingList").empty();
+				$(json).each(function(index,item){
+					let html = "<option value ='";
+					html += item.rating;
+					html += "'>";
+					html += item.rating;
+					html += "</option>";
+					$("#ratingList").append(html);
+				});
+			}
+		})
+		
+		// 연령대 선택했을 때
+		$("#ratingList").change(function() {
+			console.log($(this).val());
+			rating = $(this).val();
+			filmList();
+		});
+	</script>
+</body>
+</html>
+
+
+
+
+
+

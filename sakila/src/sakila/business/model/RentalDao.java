@@ -9,7 +9,7 @@ import java.util.List;
 import sakila.customer.model.Address;
 import sakila.customer.model.Customer;
 import sakila.db.DBHelp;
-import sakila.iventory.model.Film;
+import sakila.inventory.model.Film;
 
 public class RentalDao {
 	// 전체 행의 갯수

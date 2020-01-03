@@ -20,14 +20,14 @@ import sakila.customer.model.AddressDao;
 import sakila.customer.model.CityDao;
 import sakila.customer.model.CountryDao;
 import sakila.customer.model.CustomerDao;
-import sakila.iventory.model.ActorDao;
-import sakila.iventory.model.CategoryDao;
-import sakila.iventory.model.FilmActorDao;
-import sakila.iventory.model.FilmCategoryDao;
-import sakila.iventory.model.FilmDao;
-import sakila.iventory.model.FilmTextDao;
-import sakila.iventory.model.InventoryDao;
-import sakila.iventory.model.LanguageDao;
+import sakila.inventory.model.ActorDao;
+import sakila.inventory.model.CategoryDao;
+import sakila.inventory.model.FilmActorDao;
+import sakila.inventory.model.FilmCategoryDao;
+import sakila.inventory.model.FilmDao;
+import sakila.inventory.model.FilmTextDao;
+import sakila.inventory.model.InventoryDao;
+import sakila.inventory.model.LanguageDao;
 
 @WebServlet("/indexController")
 public class IndexController extends HttpServlet {

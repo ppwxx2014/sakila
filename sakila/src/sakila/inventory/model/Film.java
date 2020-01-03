@@ -1,4 +1,4 @@
-package sakila.iventory.model;
+package sakila.inventory.model;
 
 public class Film {
 	private int filmId;

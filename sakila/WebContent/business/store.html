@@ -180,8 +180,9 @@
 				});
 				// 저장
 				$("#info").append(html);
-				html += "</tbody>";
-				html += "</table>";
+				let tmp = "</tbody>";
+				tmp += "</table>";
+				$("#info").append(tmp);
 				
 				// 페이징 버튼
 				$("#paging").empty();
@@ -199,7 +200,7 @@
 	
 	//이전 버튼
 	$(document).on('click', '#preBtn', function() {
-		if(currentPage === 1){
+		if(currentPage === 1) {
 			alert("현재 1페이지 입니다!");
 			return;
 		}
@@ -279,8 +280,9 @@
 				});
 				// 저장
 				$("#info").append(html);
-				html += "</tbody>";
-				html += "</table>";
+				let tmp = "</tbody>";
+				tmp += "</table>";
+				$("#info").append(tmp);
 				
 				// 페이징 버튼
 				$("#paging").empty();

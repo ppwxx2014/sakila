@@ -1,4 +1,4 @@
-package sakila.iventory.model;
+package sakila.inventory.model;
 public class Actor {
 	private int actorId;
 	private String firstName;

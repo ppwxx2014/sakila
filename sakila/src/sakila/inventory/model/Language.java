@@ -1,15 +1,15 @@
-package sakila.iventory.model;
+package sakila.inventory.model;
 
-public class Category {
-	private int categoryId;
+public class Language {
+	private int languageId;
 	private String name;
 	private String lastUpdate;
 	
-	public int getCategoryId() {
-		return categoryId;
+	public int getLanguageId() {
+		return languageId;
 	}
-	public void setCategoryId(int categoryId) {
-		this.categoryId = categoryId;
+	public void setLanguageId(int languageId) {
+		this.languageId = languageId;
 	}
 	public String getName() {
 		return name;
@@ -26,8 +26,6 @@ public class Category {
 	
 	@Override
 	public String toString() {
-		return "Category [categoryId=" + categoryId + ", name=" + name + ", lastUpdate=" + lastUpdate + "]";
+		return "Language [languageId=" + languageId + ", name=" + name + ", lastUpdate=" + lastUpdate + "]";
 	}
-	
-	
 }

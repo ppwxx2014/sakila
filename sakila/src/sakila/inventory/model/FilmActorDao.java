@@ -1,4 +1,4 @@
-package sakila.iventory.model;
+package sakila.inventory.model;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -6,14 +6,14 @@ import java.sql.ResultSet;
 
 import sakila.db.DBHelp;
 
-public class FilmDao {
+public class FilmActorDao {
 	// 전체 행의 갯수
-	public int selectFilmCount() {
+	public int selectFilmActorCount() {
 		int count = 0;
 		Connection conn = null;
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT COUNT(*) FROM film";
+		String sql = "SELECT COUNT(*) FROM film_actor";
 		try {
 			conn = DBHelp.getConncetion();
 			stmt = conn.prepareStatement(sql);

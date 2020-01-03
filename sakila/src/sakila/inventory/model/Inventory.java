@@ -1,4 +1,4 @@
-package sakila.iventory.model;
+package sakila.inventory.model;
 
 import sakila.business.model.Store;
 

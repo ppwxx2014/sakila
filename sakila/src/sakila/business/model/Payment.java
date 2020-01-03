@@ -1,8 +1,8 @@
 package sakila.business.model;
 
 import sakila.customer.model.Customer;
-import sakila.iventory.model.Film;
-import sakila.iventory.model.Inventory;
+import sakila.inventory.model.Film;
+import sakila.inventory.model.Inventory;
 
 public class Payment {
 	private int paymentId;

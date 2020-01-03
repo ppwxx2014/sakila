@@ -1,21 +1,21 @@
-package sakila.iventory.model;
+package sakila.inventory.model;
 
-public class FilmActor {
-	private Actor actor;
+public class FilmCategory {
 	private Film film;
+	private Category category;
 	private String lastUpdate;
 	
-	public Actor getActor() {
-		return actor;
-	}
-	public void setActor(Actor actor) {
-		this.actor = actor;
-	}
 	public Film getFilm() {
 		return film;
 	}
 	public void setFilm(Film film) {
 		this.film = film;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	public String getLastUpdate() {
 		return lastUpdate;
@@ -26,8 +26,6 @@ public class FilmActor {
 	
 	@Override
 	public String toString() {
-		return "FilmActor [actor=" + actor + ", film=" + film + ", lastUpdate=" + lastUpdate + "]";
+		return "FilmCategory [film=" + film + ", category=" + category + ", lastUpdate=" + lastUpdate + "]";
 	}
-	
-	
 }
