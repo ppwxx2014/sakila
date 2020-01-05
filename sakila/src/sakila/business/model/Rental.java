@@ -14,6 +14,8 @@ public class Rental {
 	private String lastUpdate;
 	private Store store;
 	private Film film;
+	private int rentalCount;
+	
 	public int getRentalId() {
 		return rentalId;
 	}
@@ -67,6 +69,12 @@ public class Rental {
 	}
 	public void setFilm(Film film) {
 		this.film = film;
+	}
+	public int getRentalCount() {
+		return rentalCount;
+	}
+	public void setRentalCount(int rentalCount) {
+		this.rentalCount = rentalCount;
 	}
 	
 	

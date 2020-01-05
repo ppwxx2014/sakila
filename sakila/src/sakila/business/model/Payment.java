@@ -1,6 +1,7 @@
 package sakila.business.model;
 
 import sakila.customer.model.Customer;
+import sakila.inventory.model.Category;
 import sakila.inventory.model.Film;
 import sakila.inventory.model.Inventory;
 
@@ -15,6 +16,8 @@ public class Payment {
 	private double amount;
 	private String paymentDate;
 	private String lastUpdate;
+	private Category category;
+	
 	public int getPaymentId() {
 		return paymentId;
 	}
@@ -74,6 +77,12 @@ public class Payment {
 	}
 	public void setLastUpdate(String lastUpdate) {
 		this.lastUpdate = lastUpdate;
+	}
+	public Category getCategory() {
+		return category;
+	}
+	public void setCategory(Category category) {
+		this.category = category;
 	}
 	
 	

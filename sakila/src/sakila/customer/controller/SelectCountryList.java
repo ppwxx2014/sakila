@@ -18,7 +18,6 @@ import sakila.customer.model.CountryDao;
 public class SelectCountryList extends HttpServlet {
 	private CountryDao countryDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("/address/selectCountryList ?��?��");
 		//json타입으로 리턴
 		response.setContentType("application/json;charset=UTF-8");
 		

@@ -119,6 +119,10 @@ public class IndexController extends HttpServlet {
 		int languageRow = languageDao.selectLanguageCount();
 		map.put("languageRow", languageRow);
 		
+		// 탈퇴 고객수 
+		int leaveCustomerCnt = customerDao.selectLeaveCustomer();
+		map.put("leaveCustomer", leaveCustomerCnt);
+		
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(map);
 		

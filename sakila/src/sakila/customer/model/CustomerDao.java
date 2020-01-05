@@ -49,6 +49,29 @@ public class CustomerDao {
 		return count;
 	}
 	
+	// 탈퇴한 회원 수
+	public int selectLeaveCustomer() {
+		int count = 0;
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		String sql = "SELECT COUNT(customer_id) customerId from customer WHERE active = 0";
+		try {
+			conn = DBHelp.getConncetion();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			if(rs.next()) {
+				count = rs.getInt("customerId");
+			}
+		} catch(Exception e) {
+			
+		} finally {
+			DBHelp.close(rs, stmt, conn);
+		}
+		System.out.println("count: " + count);
+		return count;
+	}
+	
 	// 사원의 리스트 출력(간략정보)
 	public List<Customer> selectCustomerList(Connection conn) throws SQLException {
 		List<Customer> list = new ArrayList<Customer>();

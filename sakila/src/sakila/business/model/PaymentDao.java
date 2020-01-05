@@ -9,9 +9,101 @@ import java.util.List;
 import sakila.customer.model.Address;
 import sakila.customer.model.Customer;
 import sakila.db.DBHelp;
+import sakila.inventory.model.Category;
 import sakila.inventory.model.Film;
 
 public class PaymentDao {
+	
+	// 매장별 매출액
+	public List<Payment> selectTotalPayment() {
+		
+		List<Payment> list = new ArrayList<Payment>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT\r\n" + 
+				"CONCAT(c.city, _utf8mb4',', cy.country) AS store, \r\n" + 
+				"CONCAT(st.first_name, _utf8mb4' ', st.last_name) AS staffName, \r\n" + 
+				"SUM(p.amount) AS totalSales\r\n" + 
+				"FROM payment AS p\r\n" + 
+				"INNER JOIN rental AS r ON p.rental_id = r.rental_id\r\n" + 
+				"INNER JOIN inventory AS i ON r.inventory_id = i.inventory_id\r\n" + 
+				"INNER JOIN store AS s ON i.store_id = s.store_id\r\n" + 
+				"INNER JOIN address AS a ON s.address_id = a.address_id\r\n" + 
+				"INNER JOIN city AS c ON a.city_id = c.city_id\r\n" + 
+				"INNER JOIN country AS cy ON c.country_id = cy.country_id\r\n" + 
+				"INNER JOIN staff AS st ON s.manager_staff_id = st.staff_id\r\n" + 
+				"GROUP BY s.store_id\r\n" + 
+				"ORDER BY cy.country, c.city";
+		try {
+			conn = DBHelp.getConncetion();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Payment payment = new Payment();
+				
+				payment.setStore(new Store());
+				payment.getStore().setAddress(new Address());
+				payment.getStore().getAddress().setDistrict(rs.getString("store"));
+				
+				payment.setStaff(new Staff());
+				payment.getStaff().setName(rs.getString("staffName"));
+				
+				payment.setAmount(rs.getDouble("totalSales"));
+				list.add(payment);
+			}
+			System.out.println("list: " + list.toString());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBHelp.close(rs, stmt, conn);
+		}
+		return list;
+	}
+	
+	// 카테고리별 매출액
+	public List<Payment> selectPaymentByCategory() {
+		List<Payment> list = new ArrayList<Payment>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT\r\n" + 
+					"c.name AS category, \r\n" + 
+					"SUM(p.amount) AS totalSales\r\n" + 
+					"FROM payment AS p\r\n" + 
+					"INNER JOIN rental AS r ON p.rental_id = r.rental_id\r\n" + 
+					"INNER JOIN inventory AS i ON r.inventory_id = i.inventory_id\r\n" + 
+					"INNER JOIN film AS f ON i.film_id = f.film_id\r\n" + 
+					"INNER JOIN film_category AS fc ON f.film_id = fc.film_id\r\n" + 
+					"INNER JOIN category AS c ON fc.category_id = c.category_id\r\n" + 
+					"GROUP BY c.name\r\n" + 
+					"ORDER BY totalSales DESC";
+		try {
+			conn = DBHelp.getConncetion();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Payment payment = new Payment();
+				
+				payment.setCategory(new Category());
+				payment.getCategory().setName(rs.getString("category"));
+				
+				payment.setAmount(rs.getDouble("totalSales"));
+				list.add(payment);
+			}
+			System.out.println("list: " + list.toString());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBHelp.close(rs, stmt, conn);
+		}
+		return list;
+	}
+	
 	// 전체 행의 갯수
 	public int selectPaymentCount() {
 		int count = 0;

@@ -9,6 +9,7 @@
 
 <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 <link rel="stylesheet" href="/sakila/assets/css/style.css">
+<link rel="stylesheet" href="/sakila/assets/css/indexStyle.css">
 </head>
 <body>
 	<div class="wrapper d-flex align-items-stretch">
@@ -18,83 +19,221 @@
 
 		<!-- Page Content  -->
 		<div id="content" class="p-4 p-md-5 pt-5">
-			<h1>Sakila</h1>
-			<p>각 테이블 컬럼 수 </p>
-			<table>
-				<thead>
-					<tr>
-						<th>테이블 이름</th>
-						<th>행의 수</th>
-					</tr>
-				</thead>
-
-				<tbody>
-					<tr>
-						<td>country</td>
-						<td><span id="countryRow"></span></td>
-					</tr>
-					<tr>
-						<td>city</td>
-						<td><span id="cityRow"></span></td>
-					</tr>
-					<tr>
-						<td>address</td>
-						<td><span id="addressRow"></span></td>
-					</tr>
-					<tr>
-						<td>customer</td>
-						<td><span id="customerRow"></span></td>
-					</tr>
-					<tr>
-						<td>staff</td>
-						<td><span id="staffRow"></span></td>
-					</tr>
-					<tr>
-						<td>store</td>
-						<td><span id="storeRow"></span></td>
-					</tr>
-					<tr>
-						<td>payment</td>
-						<td><span id="paymentRow"></span></td>
-					</tr>
-					<tr>
-						<td>rental</td>
-						<td><span id="rentalRow"></span></td>
-					</tr>
-					<tr>
-						<td>category</td>
-						<td><span id="categoryRow"></span></td>
-					</tr>
-					<tr>
-						<td>filmCategory</td>
-						<td><span id="filmCategoryRow"></span></td>
-					</tr>
-					<tr>
-						<td>film</td>
-						<td><span id="filmRow"></span></td>
-					</tr>
-					<tr>
-						<td>language</td>
-						<td><span id="languageRow"></span></td>
-					</tr>
-					<tr>
-						<td>actor</td>
-						<td><span id="actorRow"></span></td>
-					</tr>
-					<tr>
-						<td>filmActor</td>
-						<td><span id="filmActorRow"></span></td>
-					</tr>
-					<tr>
-						<td>inventory</td>
-						<td><span id="inventoryRow"></span></td>
-					</tr>
-					<tr>
-						<td>filmText</td>
-						<td><span id="filmTextRow"></span></td>
-					</tr>
-				</tbody>
-			</table>
+			<nav class="navbar navbar-expand-sm header">
+				<ul class="navbar-nav">
+					<strong><a href = "/sakila/index.html">sakila</a><span> │ home</span></strong>
+				</ul>
+			</nav>
+			<hr>
+			<!-- mainInfo -->
+			<div class = "row">
+				<div class = "col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-info shadow h-100 py-2">
+						<div class = "card-body text-xs font-weight-bold text-primary">
+							필름
+							<div class = "text-gray" id = "filmCount">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class = "col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-info shadow h-100 py-2">
+						<div class = "card-body text-xs font-weight-bold text-primary">
+							등록된 고객
+							<div class = "text-gray" id = "customerCount">
+								tett
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class = "col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-info shadow h-100 py-2">
+						<div class = "card-body text-xs font-weight-bold text-primary">
+							운영 매장
+							<div class = "text-gray" id = "storeCount">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class = "col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-info shadow h-100 py-2">
+						<div class = "card-body text-xs font-weight-bold text-primary">
+							총 매출액
+							<div class = "text-gray" id = "totalBill">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /mainInfo End -->
+			
+			<!-- 통계 -->
+			<div class = "row">
+				<div class = "col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-warning shadow h-100 py-2">
+						<div class = "card-body text-xs font-weight-bold text-primary">
+							최다 대여 필름
+							<div class = "text-gray" id = "topFilm">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class = "col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-warning shadow h-100 py-2">
+						<div class = "card-body text-xs font-weight-bold text-primary">
+							최다 대여 고객
+							<div class = "text-gray" id = "mvpCustomer">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class = "col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-warning shadow h-100 py-2">
+						<div class = "card-body text-xs font-weight-bold text-primary">
+							탈퇴 고객
+							<div class = "text-gray" id = "leaveCustomer">
+							</div>
+						</div>
+					</div>
+				</div>
+				
+				<div class = "col-xl-3 col-md-6 mb-4">
+					<div class="card border-left-warning shadow h-100 py-2">
+						<div class = "card-body text-xs font-weight-bold text-primary">
+							보유 필름 최다 출연 배우
+							<div class = "text-gray" id = "topActor">
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!-- /통계 end -->
+			
+			<div class = "row">
+				<div class="col-md-4">
+					<!-- /table row info -->
+					<div>
+						<div class = "text-xs font-weight-bold text-gray"> 각 테이블 행 갯수</div>
+						<table class = "table table-hover">
+							<thead>
+								<tr>
+									<th>테이블 이름</th>
+									<th>행의 수</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>country</td>
+									<td><span id="countryRow"></span></td>
+								</tr>
+								<tr>
+									<td>city</td>
+									<td><span id="cityRow"></span></td>
+								</tr>
+								<tr>
+									<td>address</td>
+									<td><span id="addressRow"></span></td>
+								</tr>
+								<tr>
+									<td>customer</td>
+									<td><span id="customerRow"></span></td>
+								</tr>
+								<tr>
+									<td>staff</td>
+									<td><span id="staffRow"></span></td>
+								</tr>
+								<tr>
+									<td>store</td>
+									<td><span id="storeRow"></span></td>
+								</tr>
+								<tr>
+									<td>payment</td>
+									<td><span id="paymentRow"></span></td>
+								</tr>
+								<tr>
+									<td>rental</td>
+									<td><span id="rentalRow"></span></td>
+								</tr>
+								<tr>
+									<td>category</td>
+									<td><span id="categoryRow"></span></td>
+								</tr>
+								<tr>
+									<td>filmCategory</td>
+									<td><span id="filmCategoryRow"></span></td>
+								</tr>
+								<tr>
+									<td>film</td>
+									<td><span id="filmRow"></span></td>
+								</tr>
+								<tr>
+									<td>language</td>
+									<td><span id="languageRow"></span></td>
+								</tr>
+								<tr>
+									<td>actor</td>
+									<td><span id="actorRow"></span></td>
+								</tr>
+								<tr>
+									<td>filmActor</td>
+									<td><span id="filmActorRow"></span></td>
+								</tr>
+								<tr>
+									<td>inventory</td>
+									<td><span id="inventoryRow"></span></td>
+								</tr>
+								<tr>
+									<td>filmText</td>
+									<td><span id="filmTextRow"></span></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+				<!-- /table row info end -->
+				
+				<!-- sales by category -->
+				<div class = "col-md-4">
+					<div class = "text-xs font-weight-bold text-gray">카테고리별 총 매출액</div>
+					<table class = "table table-hover">
+						<thead>
+							<tr>
+								<th>카테고리</th>
+								<th>총 매출액</th>
+							</tr>
+						</thead>
+						<tbody id = "categoryPayment">
+							
+						</tbody>
+					</table>
+				</div>
+				<!-- /sales by category end -->
+					
+				<div class = "col-md-4">
+					<!-- sales by store -->
+					<div class = "text-xs font-weight-bold text-gray"> 매장별 총 매출액</div>
+					<table class = "table table-hover">
+						<thead>
+							<tr>
+								<th>매장</th>
+								<th>직원 이름</th>
+								<th>총 매출액</th>
+							</tr>
+						</thead>
+						<tbody id = "totalPayment">
+							
+						</tbody>
+					</table>
+					<!-- /sales by store end -->
+				</div>
+				
+				
+			</div>
 		</div>
 	</div>
 
@@ -115,22 +254,105 @@
 				$("#cityRow").text(json.cityRow);
 				$("#addressRow").text(json.addressRow);
 				$("#customerRow").text(json.customerRow);
+				$("#customerCount").text(json.customerRow);
 				$("#staffRow").text(json.staffRow);
 				$("#storeRow").text(json.storeRow);
+				$("#storeCount").text(json.storeRow);
 				$("#paymentRow").text(json.paymentRow);
 				$("#rentalRow").text(json.rentalRow);
 				$("#categoryRow").text(json.categoryRow);
 				$("#filmCategoryRow").text(json.filmCategoryRow);
 				$("#filmRow").text(json.filmRow);
+				$("#filmCount").text(json.filmRow);
 				$("#languageRow").text(json.languageRow);
 				$("#actorRow").text(json.actorRow);
 				$("#filmActorRow").text(json.filmActorRow);
 				$("#inventoryRow").text(json.inventoryRow);
 				$("#filmTextRow").text(json.filmTextRow);
+				$("#leaveCustomer").text(json.leaveCustomer); // 탈퇴 고객 수
 			}
 		});
+		
+		// 매장별 매출액
+		let totalBill = 0;
+		$.ajax({
+			url : "/sakila/index/selectTotalPaymentByStore",
+			method : "post",
+			success : function(json) {
+				console.log(json);
+				$(json).each(function (index, item) {
+					totalBill += item.amount;
+					let html = "<tr>";
+					html += "<td>" + item.store.address.district + "</td>";
+					html += "<td>" + item.staff.name + "</td>";
+					html += "<td>" + "$" + item.amount + "</td>";
+					html += "</tr>";
+					$("#totalPayment").append(html);
+				});
+				$("#totalBill").append("$" + totalBill);
+				console.log("totalBill: " + totalBill);
+			}
+		});
+		
+		// 카테고리별 매출액
+		$.ajax({
+			url : "/sakila/index/selectPaymentByCategory",
+			method : "post",
+			success : function(json) {
+				console.log(json);
+				$(json).each(function (index, item) {
+					let html = "<tr>";
+					html += "<td>" + item.category.name + "</td>";
+					html += "<td>" + "$" + item.amount + "</td>";
+					html += "</tr>";
+					$("#categoryPayment").append(html);
+				});
+			}
+		});
+		
+		// 최다 대여 고객
+		$.ajax({
+			url : "/sakila/business/rentalCountTopCustomer",
+			method : "post",
+			success : function(json) {
+				console.log(json);
+				$(json).each(function (index, item) {
+					let html = item.customer.fullname + "    ";
+					html += item.rentalCount + "회";
+					$("#mvpCustomer").append(html);
+				});
+			}
+		})
 	</script>
 </body>
+<!-- # 가장 많이 빌려간 필름
+SELECT y.filmtitle, MAX(y.num) AS rentalCountTop 
+FROM (
+		SELECT fi.title AS filmtitle, COUNT(inv.film_id) AS num FROM inventory inv
+		INNER JOIN
+		rental ren
+		INNER join
+		film fi
+		ON
+		inv.inventory_id = ren.inventory_id
+		AND
+		fi.film_id = inv.film_id
+		GROUP BY inv.film_id
+		ORDER BY num desc LIMIT 1 
+	) y
+
+# 소장 필름 내 최다 출연 배우
+SELECT y.actorName AS actorName, MAX(y.num) AS count FROM
+	(
+		SELECT CONCAT(ac.first_name, ' ', ac.last_name) actorName, COUNT(fia.actor_id) AS num 
+		FROM film_actor fia
+		INNER JOIN
+		actor ac
+		ON
+		fia.actor_id = ac.actor_id
+		GROUP BY fia.actor_id
+		ORDER BY num DESC LIMIT 1
+	) y -->
 </html>
 
 

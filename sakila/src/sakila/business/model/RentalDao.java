@@ -130,4 +130,42 @@ public class RentalDao {
 		}
 		return list;
 	}
+	
+	// 가장 많이 빌려간 사람 조회
+	public List<Rental> rentalCountTopCustomer() {
+		
+		List<Rental> list = new ArrayList<Rental>();
+		Connection conn = null;
+		PreparedStatement stmt = null;
+		ResultSet rs = null;
+		
+		String sql = "SELECT CONCAT(cus.first_name, ' ', cus.last_name) AS customerName,\r\n" + 
+					"COUNT(ren.customer_id) AS rentalCount\r\n" + 
+					"FROM rental ren\r\n" + 
+					"INNER JOIN customer cus\r\n" + 
+					"ON\r\n" + 
+					"ren.customer_id = cus.customer_id\r\n" + 
+					"GROUP BY ren.customer_id\r\n" + 
+					"ORDER BY rentalCount DESC\r\n" + 
+					"LIMIT 1";
+		try {
+			conn = DBHelp.getConncetion();
+			stmt = conn.prepareStatement(sql);
+			rs = stmt.executeQuery();
+			
+			while(rs.next()) {
+				Rental rental = new Rental();
+				rental.setCustomer(new Customer());
+				rental.getCustomer().setFullname(rs.getString("customerName"));
+				rental.setRentalCount(rs.getInt("rentalCount"));
+				list.add(rental);
+			}
+			System.out.println("list: " + list.toString());
+		} catch(Exception e) {
+			e.printStackTrace();
+		} finally {
+			DBHelp.close(rs, stmt, conn);
+		}
+		return list;
+	}
 }

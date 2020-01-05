@@ -17,6 +17,7 @@ import sakila.customer.model.CountryDao;
 public class SelectCountryCount extends HttpServlet {
 	private CountryDao countryDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		System.out.println("::: SelectCountryCount 실행 :::");
 		response.setContentType("application/json;charset=UTF-8");
 		
 		countryDao = new CountryDao();
@@ -27,6 +28,6 @@ public class SelectCountryCount extends HttpServlet {
 		System.out.println(jsonCount);
 		
 		response.getWriter().write(jsonCount);
-		
+		System.out.println("::: SelectCountryCount 종료 :::");
 	}
 }

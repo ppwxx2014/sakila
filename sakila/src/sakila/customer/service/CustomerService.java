@@ -28,7 +28,7 @@ public class CustomerService {
 				DBHelp.close(null, null, conn);
 			}
 		return list;
-		}
+	}
 	
 	
 	
