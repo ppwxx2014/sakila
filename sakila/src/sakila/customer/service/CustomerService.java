@@ -15,13 +15,13 @@ public class CustomerService {
 	private AddressDao addressDao;
 	private CustomerDao customerDao;
 	
-	public List<Customer> selectCustomerList() {
+	public List<Customer> selectCustomerList(int currentPage) {
 		Connection conn = null;
 		List<Customer> list = new ArrayList<Customer>();
 		try {	
 			conn = DBHelp.getConncetion();
 			customerDao = new CustomerDao();
-			list = customerDao.selectCustomerList(conn);
+			list = customerDao.selectCustomerList(conn, currentPage);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}finally {

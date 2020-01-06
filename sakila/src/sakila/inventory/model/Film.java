@@ -14,6 +14,7 @@ public class Film {
 	private String rating;
 	private String specialFeatures;
 	private String lastUpdate;
+	private int filmCount; // 필름갯수
 	
 	public int getFilmId() {
 		return filmId;
@@ -101,6 +102,12 @@ public class Film {
 				+ ", rentalDuration=" + rentalDuration + ", rentalRate=" + rentalRate + ", length=" + length
 				+ ", replacementCost=" + replacementCost + ", rating=" + rating + ", specialFeatures=" + specialFeatures
 				+ ", lastUpdate=" + lastUpdate + "]";
+	}
+	public int getFilmCount() {
+		return filmCount;
+	}
+	public void setFilmCount(int filmCount) {
+		this.filmCount = filmCount;
 	}
 	
 	

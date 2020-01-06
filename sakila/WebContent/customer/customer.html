@@ -21,97 +21,119 @@
 			<nav class="navbar navbar-expand-sm header">
 				<ul class="navbar-nav">
 					<li>
-						<strong><a href = "/sakila/customer/customer.html">Customer</a><span> │ 매장  · 직원 관리</span></strong>
+						<strong><a href = "/sakila/customer/customer.html">Customer</a><span> │ 고객  · 고객 관리</span></strong>
 					</li>
 				</ul>
 			</nav>
 			<hr class="division">
 			<!-- /header -->
 
-			<div>
-				<!-- 주소를 먼저 입력 -->
-				<table border="1">
-					<tr>
-						<td>
-							<!-- 1. country list select -->
-							<div>
-								<select size="10" id="countryList">
-
-								</select>
-							</div>
-						</td>
-
-						<td>
-							<!-- 2. city list select -->
-							<div>
-								<select size="10" id="cityList">
-
-								</select>
-							</div>
-						</td>
-					</tr>
-				</table>
-				<!-- 고객의 정보가 입력 -->
-				<h3>고객 정보를 입력</h3>
-				<form>
-					<fieldset>
-						<legend>주소정보</legend>
+			<div class = "row">
+				<!-- 고객 주소 선택 -->
+				<div class="col-md-4">
+					<!-- 주소를 먼저 입력 -->
+					
+					<div class = "card-header">
+						<strong>나라, 도시 선택</strong>
+					</div>
+					<div class="card-body card-block">
+						<!-- 1. country list select -->
 						<div>
-							cityId : <input type="text" id="cityId" readonly="readonly">
+							<select size="10" id="countryList">
+							</select>
 						</div>
-						<!-- 자동입력 -->
+						
+						<!-- 2. city list select -->
 						<div>
-							address : <input type="text" id="address">
+							<select size="10" id="cityList">
+							</select>
 						</div>
-						<div>
-							address2 : <input type="text" id="address2">
+					</div>
+					<!-- 고객의 정보가 입력 -->
+				</div>
+				<!-- /고객 주소 선택 End -->
+				
+				<!-- 고객 주소 정보 -->
+				<div class="col-md-4">
+					<div class = "card-header">
+						<strong>고객 주소</strong>
+					</div>
+					<div class="card-body card-block">
+						<div class = "form-group">
+							<label class=" form-control-label">도시 고유번호</label>
+							<input type="text" class="form-control" id="cityId" readonly="readonly">
 						</div>
-						<div>
-							district : <input type="text" id="district">
+						<div class = "form-group">
+							<label class=" form-control-label">주소</label>
+							<input type="text" class="form-control" id="address">
 						</div>
-						<div>
-							postalCode : <input type="text" id="postalCode">
+						<div class = "form-group">
+							<label class=" form-control-label">상세 주소</label>
+							<input type="text" class="form-control" id="address2">
 						</div>
-						<div>
-							phone : <input type="text" id="phone">
+						<div class = "form-group">
+							<label class=" form-control-label">지구(지방)</label>
+							<input type="text" class="form-control" id="district">
 						</div>
-					</fieldset>
-					<fieldset>
-						<legend>고객정보</legend>
-						<div>
-							storeId : <select id="storeId">
+						<div class = "form-group">
+							<label class=" form-control-label">우편 번호</label>
+							<input type="text" class="form-control" id="postalCode">
+						</div>
+						<div class = "form-group">
+							<label class=" form-control-label">핸드폰 번호</label>
+							<input type="text" class="form-control" id="phone">
+						</div>
+					</div>
+				</div>
+				<!-- /고객 주소 정보 End -->
+				<div class="col-md-4">
+					<div class = "card-header">
+						<strong>고객 주소</strong>
+					</div>
+					<div class="card-body card-block">
+						<div class = "form-group">
+							<label class=" form-control-label">매장 선택</label>
+							<select id="storeId">
 								<option value="1">1</option>
 								<option value="2">2</option>
 							</select>
 						</div>
-						<div>
-							firstName : <input type="text" id=firstName>
+						<div class = "form-group">
+							<label class=" form-control-label">이름(성)</label>
+							<input type="text" class="form-control" id="firstName">
 						</div>
-						<div>
-							lastName : <input type="text" id=lastName>
+						<div class = "form-group">
+							<label class=" form-control-label">이름</label>
+							<input type="text" class="form-control" id="lastName">
 						</div>
-						<div>
-							e-mail : <input type="text" id=email>
+						<div class = "form-group">
+							<label class=" form-control-label">e-mail</label>
+							<input type="text" class="form-control" id="email">
 						</div>
-					</fieldset>
-					<button type="button" id="addCustomer">고객 입력</button>
-				</form>
+					</div>
+					<button type="button" class = "btn btn-outline-info" id="addCustomer">고객 입력</button>
+				</div>
 			</div>
-			<h2>customer list</h2>
-			<!-- 고객의 정보(일부) 리스트 : 클릭시 상세정보 링크 -->
-			<table border="1">
-				<thead>
-					<tr>
-						<th>customerId</th>
-						<th>firstName</th>
-						<th>lastName</th>
-						<th>email</th>
-					</tr>
-				</thead>
-				<tbody id="list">
-
-				</tbody>
-			</table>
+						
+				<!-- <h2>customer list</h2> -->
+				<!-- 고객의 정보(일부) 리스트 : 클릭시 상세정보 링크 -->
+				<table class = "table table-hver">
+					<thead>
+						<tr>
+							<th>customerId</th>
+							<th>firstName</th>
+							<th>lastName</th>
+							<th>email</th>
+						</tr>
+					</thead>
+					<tbody id="list">
+	
+					</tbody>
+				</table>
+				
+				<div id = "paging">
+				
+				</div>
 		</div>
 	</div>
 
@@ -125,24 +147,76 @@
 	</script>
 	
 	<script>
+	let currentPage = 1;
+	var customerList = function() {
+		$.ajax({
+			url : "/sakila/customer/selectCustomer",
+			method : "post",
+			data : { currentPage : currentPage },
+			success : function(json) {
+				console.log(json);
+				$("#list").empty();
+				$(json).each(function(index, item) {
+					let html = "<tr>";
+					html += "<td>"+item.customerId+"</td>";
+					html += "<td>"+item.firstName+"</td>";
+					html += "<td>"+item.lastName+"</td>";
+					html += "<td>"+item.email+"</td>";
+					html += "/<tr>";
+					$("#list").append(html);
+		
+					// 페이징 버튼
+					$("#paging").empty();
+					let btn = "<button class = 'btn btn-outline-info' id = 'preBtn'>이전</button>";
+					btn += "<button class = 'btn btn-outline-info' id = 'nextBtn'>다음</button>";
+					$("#paging").append(btn);
+				});
+			}
+		});
+	}
+	
 	// 리스트
+	customerList();
+	
+	let count = 0;
 	$.ajax({
-		url : "/sakila/customer/selectCustomer",
+		url : "/sakila/indexController",
 		method : "post",
 		success : function(json) {
-			console.log("Customer List Success!");
-			$(json).each(function(index, item) {
-				let html = "<tr>";
-				html += "<td>"+item.customerId+"</td>";
-				html += "<td>"+item.firstName+"</td>";
-				html += "<td>"+item.lastName+"</td>";
-				html += "<td>"+item.email+"</td>";
-				html += "/<tr>";
-				$("#list").append(html);
-			});
+			console.log(json);
+			count = json.customerRow;
+			console.log("count: " + count);
 		}
 	});
 	
+	//이전 버튼
+	$(document).on('click', '#preBtn', function() {
+		if(currentPage === 1) {
+			alert("현재 1페이지 입니다!");
+			return;
+		}
+		currentPage -= 1;
+		console.log("현재 currentPage: " + currentPage);
+		
+		// 목록 출력
+		customerList();
+	});
+	
+	// 다음 버튼
+	$(document).on('click', '#nextBtn', function() {
+		let lastPage = Math.ceil(count / 10);
+		console.log("lastPage: " + lastPage);
+		if(currentPage == lastPage) {
+			alert("마지막 페이지 입니다!");
+			return;
+		}
+		
+		currentPage += 1;
+		console.log("현재 currnetPage: " + currentPage);
+		
+		// 목록 출력
+		customerList();
+	});
 	
 	$.ajax({
 		url : "/sakila/customer/selectCountryListAll",
@@ -190,7 +264,7 @@
 	// addAddress 클릭시
 	$("#addCustomer").click( function() {
 		if($("#cityId").val() === "" || $("#address").val() === "" || $("#address2").val() === "" || $("#district").val() === "" || $("#postalCode").val() === "" || $("#phone").val() === ""){
-			alert("다 입력 후 눌러주세용~");
+			alert("공백없이 모두 입력해주세요!");
 		} else {
 			$.ajax({
 				url : "/sakila/customer/insertCustomer",
@@ -209,7 +283,7 @@
 					console.log( $("#lastName").val()  );
 					console.log( $("#email").val() );
 					
-					//$("#list").empty();
+					customerList();
 					
 				}
 			});

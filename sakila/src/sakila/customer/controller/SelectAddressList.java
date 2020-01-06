@@ -22,7 +22,11 @@ public class SelectAddressList extends HttpServlet {
 		response.setContentType("/application/json;charset=utf-8");
 		
 		addressDao = new AddressDao();
-		List<Address> list = addressDao.selectAddressList();
+		
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		System.out.println("currentPage: "+currentPage);
+		
+		List<Address> list = addressDao.selectAddressList(currentPage);
 		
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(list);

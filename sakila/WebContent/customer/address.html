@@ -31,7 +31,7 @@
 			<hr>
 			
 			<div>
-				<table border="1">
+				<table class = "table table-hover">
 					<thead>
 						<tr>
 							<th>countryId</th>
@@ -51,6 +51,10 @@
 
 					</tbody>
 				</table>
+				
+				<div id = "paging">
+			
+				</div>
 			</div>
 		</div>
 	</div>
@@ -60,33 +64,87 @@
 	<script src="/sakila/assets/js/bootstrap.min.js"></script>
 	<script src="/sakila/assets/js/main.js"></script>
 	<script>
+	
+		let currentPage = 1; // 페이지 초기화
 		$("#sidebar").load("/sakila/templates/aside.html");
 		
 		// 기본리스트 출력
+		var addressList = function() {
+			$.ajax({
+				url : "/sakila/customer/selectAddressList",
+				method : "post",
+				data : { currentPage : currentPage },
+				success : function(json) { // 성공했을시
+					console.log(json);
+				$("#list").empty();
+					$(json).each(function(index, item) {
+						let html = "<tr>";
+						html += "<td>"+item.city.country.countryId+"</td>";
+						html += "<td>"+item.city.country.country+"</td>";
+						html += "<td>"+item.city.cityId+"</td>";
+						html += "<td>"+item.city.city+"</td>";
+						html += "<td>"+item.addressId+"</td>";
+						html += "<td>"+item.address+"</td>";
+						html += "<td>"+item.address2+"</td>";
+						html += "<td>"+item.district+"</td>";
+						html += "<td>"+item.postalCode+"</td>";
+						html += "<td>"+item.phone+"</td>";
+						html += "<td>"+item.lastUpdate+"</td>";
+						html += "</tr>";
+						// tbody안에 저장
+						$("#list").append(html);
+					});
+					// 페이징 버튼
+					$("#paging").empty();
+					let btn = "<button class = 'btn btn-outline-info' id = 'preBtn'>이전</button>";
+					btn += "<button class = 'btn btn-outline-info' id = 'nextBtn'>다음</button>";
+					$("#paging").append(btn);
+				}
+			});
+		}
 		
-		 $.ajax({
-			url : "/sakila/customer/selectAddressList",
+		let count = 0;
+		$.ajax({
+			url : "/sakila/indexController",
 			method : "post",
-			success : function(json) { // 성공했을시
+			success : function(json) {
 				console.log(json);
-				$(json).each(function(index, item) {
-					let html = "<tr>";
-					html += "<td>"+item.city.country.countryId+"</td>";
-					html += "<td>"+item.city.country.country+"</td>";
-					html += "<td>"+item.city.cityId+"</td>";
-					html += "<td>"+item.city.city+"</td>";
-					html += "<td>"+item.addressId+"</td>";
-					html += "<td>"+item.address+"</td>";
-					html += "<td>"+item.address2+"</td>";
-					html += "<td>"+item.district+"</td>";
-					html += "<td>"+item.postalCode+"</td>";
-					html += "<td>"+item.phone+"</td>";
-					html += "<td>"+item.lastUpdate+"</td>";
-					html += "</tr>";
-					// tbody안에 저장
-					$("#list").append(html);
-				});
+				count = json.addressRow;
+				console.log("count: " + count);
 			}
+		});
+		
+		// 목록 출력
+		addressList();
+		
+		
+		//이전 버튼
+		$(document).on('click', '#preBtn', function() {
+			if(currentPage === 1) {
+				alert("현재 1페이지 입니다!");
+				return;
+			}
+			currentPage -= 1;
+			console.log("현재 currentPage: " + currentPage);
+			
+			// 목록 출력
+			addressList();
+		});
+		
+		// 다음 버튼
+		$(document).on('click', '#nextBtn', function() {
+			let lastPage = Math.ceil(count / 10);
+			console.log("lastPage: " + lastPage);
+			if(currentPage == lastPage) {
+				alert("마지막 페이지 입니다!");
+				return;
+			}
+			
+			currentPage += 1;
+			console.log("현재 currnetPage: " + currentPage);
+			
+			// 목록 출력
+			addressList();
 		});
 	</script>
 </body>

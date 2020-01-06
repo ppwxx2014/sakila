@@ -1,7 +1,7 @@
 <!doctype html>
 <html lang="kor">
 <head>
-<title>Customer</title>
+<title>Country</title>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -23,7 +23,7 @@
 			<nav class="navbar navbar-expand-sm header">
 				<ul class="navbar-nav">
 					<li>
-						<strong><a href = "/sakila/customer/country.html">Country</a><span> │ 매장  · 직원 관리</span></strong>
+						<strong><a href = "/sakila/customer/country.html">Country</a><span> │ 나라 목록  · 나라 관리</span></strong>
 					</li>
 				</ul>
 			</nav>
@@ -32,29 +32,31 @@
 			
 			<div>
 				<div>
-					Country : <input type="text" id="country">
+					나라 추가 입력 <input type="text" class = "sein" id="country">
 				</div>
 				<div>
-					<button type="button" id="addCountry">add country</button>
+					<button type="button" class = "btn btn-outline-info" id="addCountry">
+						추가하기
+					</button>
 				</div>
 			</div>
 
-			<h2>Country 목록</h2>
+			<div class = "text-xs font-weight-bold text-gray div-center">나라 목록</div>
 			<div>
-				<table border="1">
+				<table class = "table table-hover">
 					<thead>
 						<tr>
-							<th>countryId</th>
-							<th>country</th>
-							<th>lastUpate</th>
+							<th>고유 번호</th>
+							<th>이름</th>
+							<th>마지막 수정 날짜</th>
 						</tr>
 					</thead>
 					<tbody id="list">
 					</tbody>
 				</table>
 			</div>
-			<button type="button" id="preBtn">이전</button>
-			<button type="button" id="nextBtn">다음</button>
+			<button type="button" id="preBtn" class = "btn btn-outline-info">이전</button>
+			<button type="button" id="nextBtn" class = "btn btn-outline-info">다음</button>
 		</div>
 	</div>
 	
@@ -166,7 +168,7 @@
 		console.log("country val : " + $("#country").val());
 		
 		if($("#country").val() === "") {
-			alert("나라 입력을 해주세요~");
+			alert("입력을 먼저해주세요!");
 			return
 		}
 		

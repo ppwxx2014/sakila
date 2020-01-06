@@ -73,12 +73,18 @@ public class CustomerDao {
 	}
 	
 	// 사원의 리스트 출력(간략정보)
-	public List<Customer> selectCustomerList(Connection conn) throws SQLException {
+	public List<Customer> selectCustomerList(Connection conn, int currentPage) throws SQLException {
 		List<Customer> list = new ArrayList<Customer>();
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
-		String sql = "SELECT customer_id, first_name, last_name, email FROM customer ORDER BY customer_id DESC limit 100";
+		final int ROW_PER_PAGE = 10;
+		int beginRow = (currentPage -1) * ROW_PER_PAGE;
+		System.out.println("beginRow : " + beginRow);
+		
+		String sql = "SELECT customer_id, first_name, last_name, email FROM customer ORDER BY customer_id DESC limit ?, ?";
 		stmt = conn.prepareStatement(sql);
+		stmt.setInt(1, beginRow);	
+		stmt.setInt(2, ROW_PER_PAGE);
 		rs = stmt.executeQuery();
 		while(rs.next()) {
 			Customer customer = new Customer();

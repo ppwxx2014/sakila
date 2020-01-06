@@ -108,6 +108,7 @@ public class FilmDao {
 		return list;
 	}
 	
+	// 연령등급
 	public List<Film> filmRating() {
 		List<Film> list = new ArrayList<Film>();
 		Connection conn = null;

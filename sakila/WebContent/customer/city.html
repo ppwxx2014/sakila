@@ -25,34 +25,31 @@
 			<nav class="navbar navbar-expand-sm header">
 				<ul class="navbar-nav">
 					<li>
-						<strong><a href = "/sakila/customer/city.html">City</a><span> │ 매장  · 직원 관리</span></strong>
+						<strong><a href = "/sakila/customer/city.html">City</a><span> │ 도시  · 도시 관리</span></strong>
 					</li>
 				</ul>
 			</nav>
 			<hr class = "division">
 			<!-- /header -->
-			
-			<h1>CITY</h1>
-			<h2>city 추가</h2>
-
 			<div>
-				<div class="dan">
-					country 목록 : <select size="10" id="countryList">
-
+				<div>
+					country 목록 : 
+					<select size="10" id="countryList">
 					</select>
 				</div>
-				<div class="dan">
-					country id : <input type="text" id="countryId" readonly="readonly">
-					city : <input type="text" id="city">
-					<button type="button" id="addCity">추가하기</button>
+				<div>
+					나라 추가 입력 <input type="text" class = "sein" id="countryId" readonly="readonly">
+					도시 : <input type="text" class = "sein" id="city">
+					<button type="button" class = "btn btn-outline-info" id="addCity">
+						추가하기
+					</button>
 				</div>
 			</div>
-
+			<hr class = "division">
 			<div>
 				<!-- 도시 목록 보기 -->
-				<h2>city 목록</h2>
 				<div>
-					<table border="1">
+					<table class = "table table-hover">
 						<thead>
 							<tr>
 								<th>city_id</th>
@@ -66,9 +63,10 @@
 						<tbody id="list">
 						</tbody>
 					</table>
+					<div id = "paging">
+					
+					</div>
 				</div>
-				<button type="button" id="preBtn">이전</button>
-				<button type="button" id="nextBtn">다음</button>
 			</div>
 		</div>
 	</div>
@@ -82,7 +80,6 @@
 		$("#sidebar").load("/sakila/templates/aside.html");
 	</script>
 </body>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
 	<script>
 		// aside.html include
 		$("#aside").load("/sakila/aside.html");
@@ -150,59 +147,54 @@
 		// 첫페이지
 		let currentPage = 1;
 		
-		$.ajax({
-			url : "/sakila/customer/selectCityList",
-			method : "post",
-			data : {"currentPage" : currentPage},
-			success : function(json) { // 성공했을시
-				// console.log(json);
-				for(let i = 0; json.length; i++) {
-					let html = "<tr>";
-					html += "<td>"+json[i].cityId+"</td>";
-					html += "<td>"+json[i].city+"</td>";
-					html += "<td>"+json[i].lastUpdate+"</td>";
-					html += "<td>"+json[i].country.countryId+"</td>";
-					html += "<td>"+json[i].country.country+"</td>";			
-					html += "</tr>";
-					// tbody안에 저장
-					$("#list").append(html);
-				}
-			}
-		});
-		
-		// 이전버튼
-		$("#preBtn").click(function() {
-			if(currentPage === 1) {
-				alert("현재 1페이지입니다.");
-				return;
-			}
-		
-		currentPage--;
-		console.log(currentPage);
-		
-		$("#list").empty(); // 요청 중복을 막기 위해 청소
-		$.ajax({
-			url : "/sakila/customer/selectCityList",
-			method : "post",
-			data : {"currentPage" : currentPage},
-			success : function(json) { // 성공했을시
-				console.log(json);
-				for(let i = 0; json.length; i++) {
-					let html = "<tr>";
-					html += "<td>"+json[i].cityId+"</td>";
-					html += "<td>"+json[i].city+"</td>";
-					html += "<td>"+json[i].country.countryId+"</td>";
-					html += "<td>"+json[i].country.country+"</td>";			
-					html += "<td>"+json[i].lastUpdate+"</td>";
-					html += "</tr>";
-					// tbody안에 저장
-					$("#list").append(html);
-					}
+		var cityList = function() {
+			$.ajax({
+				url : "/sakila/customer/selectCityList",
+				method : "post",
+				data : {"currentPage" : currentPage},
+				success : function(json) { // 성공했을시
+					// console.log(json);
+					$("#list").empty();
+					$(json).each(function(index, item) {
+						let html = "<tr>";
+						html += "<td>" + item.cityId + "</td>";
+						html += "<td>" + item.city + "</td>";
+						html += "<td>" + item.lastUpdate + "</td>";
+						html += "<td>" + item.country.countryId + "</td>";
+						html += "<td>" + item.country.country + "</td>";			
+						html += "</tr>";
+						// tbody안에 저장
+						$("#list").append(html);
+						
+						// 페이징 버튼
+						$("#paging").empty();
+						let btn = "<button class = 'btn btn-outline-info' id = 'preBtn'>이전</button>";
+						btn += "<button class = 'btn btn-outline-info' id = 'nextBtn'>다음</button>";
+						$("#paging").append(btn);
+					});
 				}
 			});
+		}
+		
+		// 목록 출력
+		cityList();
+		
+		//이전 버튼
+		$(document).on('click', '#preBtn', function() {
+			if(currentPage === 1) {
+				alert("현재 1페이지 입니다!");
+				return;
+			}
+			currentPage -= 1;
+			console.log("현재 currentPage: " + currentPage);
+			
+			// 목록 출력
+			cityList();
 		});
-		// 다음버튼
-		$("#nextBtn").click(function() {
+		
+		
+		// 다음 버튼
+		$(document).on('click', '#nextBtn', function() {
 			let count = 0;
 			$.ajax({
 				url : "/sakila/customer/selectCityCount",
@@ -214,41 +206,19 @@
 					count = Number(json);
 				}
 			});
-			
-			// 마지막 페이지
-			let lastPage = Math.ceil(count/10);
+			let lastPage = Math.ceil(count / 10);
+			console.log("lastPage: " + lastPage);
 			if(currentPage == lastPage) {
-				alert("마지막 페이지입니다!");
+				alert("마지막 페이지 입니다!");
 				return;
 			}
 			
-			currentPage++;
-			console.log(currentPage);
+			currentPage += 1;
+			console.log("현재 currnetPage: " + currentPage);
 			
-			$("#list").empty(); // 요청 중복을 막기 위해 청소
-			$.ajax({
-				url : "/sakila/customer/selectCityList",
-				method : "post",
-				data : {"currentPage" : currentPage},
-				success : function(json) { // 성공했을시
-					console.log(json);
-					for(let i = 0; json.length; i++) {
-						let html = "<tr>";
-						html += "<td>"+json[i].cityId+"</td>";
-						html += "<td>"+json[i].city+"</td>";
-						html += "<td>"+json[i].country.countryId+"</td>";
-						html += "<td>"+json[i].country.country+"</td>";			
-						html += "<td>"+json[i].lastUpdate+"</td>";
-						html += "</tr>";
-						
-						// tbody안에 저장
-						$("#list").append(html);
-						
-					}
-				}
-			});
+			// 목록 출력
+			cityList();
 		});
-		
 	</script>
 </html>
 

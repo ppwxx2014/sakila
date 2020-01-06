@@ -19,9 +19,8 @@ import sakila.customer.model.CityDao;
 public class SelectCityList extends HttpServlet {
 	private CityDao cityDao;
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		System.out.println("---cityList Servlet---");
-		
-		response.setContentType("application/json;charset=UTF-8");
+		System.out.println("::: SelectCityList 실행 :::");
+		response.setContentType("/application/json;charset=utf-8");
 		
 		// 첫페이지는 1
 		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
@@ -37,5 +36,6 @@ public class SelectCityList extends HttpServlet {
 		System.out.println(jsonList);
 		
 		response.getWriter().write(jsonList);
+		System.out.println("::: SelectCityList 종료 :::");
 	}
 }

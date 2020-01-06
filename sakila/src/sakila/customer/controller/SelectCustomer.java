@@ -26,7 +26,10 @@ public class SelectCustomer extends HttpServlet {
 		customerService = new CustomerService();
 		List<Customer> list = new ArrayList<Customer>();
 		
-		list = customerService.selectCustomerList();
+		int currentPage = Integer.parseInt(request.getParameter("currentPage"));
+		System.out.println("currentPage: "+currentPage);
+		
+		list = customerService.selectCustomerList(currentPage);
 		
 		Gson gson = new Gson();
 		String jsonStr = gson.toJson(list);

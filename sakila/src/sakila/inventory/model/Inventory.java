@@ -7,6 +7,7 @@ public class Inventory {
 	private Film film;
 	private Store store;
 	private String lastUpdate;
+	private int rentalCount; // 렌탈 횟수
 	
 	public int getIventoryId() {
 		return iventoryId;
@@ -36,6 +37,12 @@ public class Inventory {
 	@Override
 	public String toString() {
 		return "Iventory [iventoryId=" + iventoryId + ", film=" + film + ", lastUpdate=" + lastUpdate + "]";
+	}
+	public int getRentalCount() {
+		return rentalCount;
+	}
+	public void setRentalCount(int rentalCount) {
+		this.rentalCount = rentalCount;
 	}
 	
 	

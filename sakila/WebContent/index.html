@@ -231,8 +231,6 @@
 					</table>
 					<!-- /sales by store end -->
 				</div>
-				
-				
 			</div>
 		</div>
 	</div>
@@ -317,42 +315,42 @@
 			success : function(json) {
 				console.log(json);
 				$(json).each(function (index, item) {
-					let html = item.customer.fullname + "    ";
+					let html = item.customer.fullname + "&nbsp;&nbsp;";
 					html += item.rentalCount + "회";
 					$("#mvpCustomer").append(html);
 				});
 			}
 		})
+		
+		// 최다 대여 필름
+		$.ajax({
+			url: "/sakila/business/rentalCountTopFilm",
+			method: "post",
+			success: function(json) {
+				console.log(json);
+				$(json).each(function(index, item) {
+					let html = item.film.title  + "&nbsp;&nbsp;";
+					html += item.rentalCount + "회";
+					$("#topFilm").append(html);
+				});
+			}
+		});
+		
+		// 최다 출연 배우
+		$.ajax({
+			url: "/sakila/inventory/filmTopActor",
+			method: "post",
+			success: function(json) {
+				console.log(json);
+				$(json).each(function(index, item) {
+					let html = item.actor.fullname + "    ";
+					html += item.film.filmCount + "회";
+					$("#topActor").append(html);
+				});
+			}
+		});
 	</script>
 </body>
-<!-- # 가장 많이 빌려간 필름
-SELECT y.filmtitle, MAX(y.num) AS rentalCountTop 
-FROM (
-		SELECT fi.title AS filmtitle, COUNT(inv.film_id) AS num FROM inventory inv
-		INNER JOIN
-		rental ren
-		INNER join
-		film fi
-		ON
-		inv.inventory_id = ren.inventory_id
-		AND
-		fi.film_id = inv.film_id
-		GROUP BY inv.film_id
-		ORDER BY num desc LIMIT 1 
-	) y
-
-# 소장 필름 내 최다 출연 배우
-SELECT y.actorName AS actorName, MAX(y.num) AS count FROM
-	(
-		SELECT CONCAT(ac.first_name, ' ', ac.last_name) actorName, COUNT(fia.actor_id) AS num 
-		FROM film_actor fia
-		INNER JOIN
-		actor ac
-		ON
-		fia.actor_id = ac.actor_id
-		GROUP BY fia.actor_id
-		ORDER BY num DESC LIMIT 1
-	) y -->
 </html>
 
 

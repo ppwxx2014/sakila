@@ -13,7 +13,7 @@ import sakila.db.DBHelp;
 public class AddressDao {
 	
 	// 리스트
-	public List<Address> selectAddressList() {
+	public List<Address> selectAddressList(int currentPage) {
 		/*
 		 * city inner join country 
 		 */
@@ -22,14 +22,19 @@ public class AddressDao {
 		PreparedStatement stmt = null;
 		ResultSet rs = null;
 		
+		final int ROW_PER_PAGE = 10;
+		int beginRow = (currentPage -1) * ROW_PER_PAGE;
+		System.out.println("beginRow : " + beginRow);
 		String sql = "SELECT c.country_id, c.country, ci.city_id, ci.city, "
 				+ "ad.address_id, ad.address, ad.address2, ad.district, ad.postal_code, ad.phone, ad.last_update "
 				+ "FROM address ad INNER JOIN city ci INNER JOIN country c ON ad.city_id = ci.city_id AND ci.country_id = c.country_id "
-				+ "ORDER BY ad.address_id DESC LIMIT 100";
+				+ "ORDER BY ad.address_id DESC LIMIT ?, ?";
 		
 		try {
 			conn = DBHelp.getConncetion();
 			stmt = conn.prepareStatement(sql);
+			stmt.setInt(1, beginRow);
+			stmt.setInt(2, ROW_PER_PAGE);
 			rs = stmt.executeQuery();
 			while(rs.next()) {
 				Address address = new Address();
@@ -48,6 +53,7 @@ public class AddressDao {
 				address.setLastUpdate(rs.getString("ad.last_update"));
 				list.add(address);
 			}
+			System.out.println("list: " + list.toString());
 		} catch(Exception e) {
 			e.printStackTrace();
 		} finally {

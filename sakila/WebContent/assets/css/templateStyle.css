@@ -22,6 +22,31 @@ button {
 	margin: 2px;	
 }
 
+.sein.input[type=text], select {
+  width: 100%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  display: inline-block;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  box-sizing: border-box;
+}
+
+.div-center {
+	text-align: center;
+}
+
+
 .right {
 	float: right;
+}
+.text-xs {
+    font-size: 20px;
+}
+.font-weight-bold {
+    font-weight: 700!important;
+}
+
+.text-gray {
+    color: #5a5c69!important;
 }

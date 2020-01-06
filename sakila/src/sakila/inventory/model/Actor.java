@@ -4,6 +4,7 @@ public class Actor {
 	private String firstName;
 	private String lastName;
 	private String lastUpdate;
+	private String fullname;
 	
 	public int getActorId() {
 		return actorId;
@@ -34,6 +35,12 @@ public class Actor {
 	public String toString() {
 		return "Actor [actorId=" + actorId + ", firstName=" + firstName + ", lastName=" + lastName + ", lastUpdate="
 				+ lastUpdate + "]";
+	}
+	public String getFullname() {
+		return fullname;
+	}
+	public void setFullname(String fullname) {
+		this.fullname = fullname;
 	}
 	
 	
